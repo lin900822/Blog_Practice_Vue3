@@ -1,5 +1,5 @@
 <template>
-  <div id="login-view">
+  <div id="login-background">
     <div id="login" class="shadow">
       <form action="javascript:void(0)" @keydown.enter="login()">
         <h1>登入</h1>
@@ -13,8 +13,9 @@
             記住我
           </label>
         </div>
+
+        <p v-text="errorMessage" style="color: red; text-align: center; margin-top: 15px"></p>
         <button type="button" class="btn btn-primary" @click.prevent="login()">登入</button>
-        <p v-text="loginMessage" style="color: red; text-align: center; margin-top: 15px"></p>
       </form>
     </div>
   </div>
@@ -30,10 +31,10 @@ export default {
   setup(props, ctx) {
     const username = ref("");
     const password = ref("");
-    const loginMessage = ref("");
+    const errorMessage = ref("");
 
     const login = () => {
-      loginMessage.value = "";
+      errorMessage.value = "";
       api.login(username.value, password.value).then(response => {
         const token = response.data;
         localStorage.setItem("token", token);
@@ -41,14 +42,14 @@ export default {
         location.href = "/";
       }).catch(error => {
         console.log(error.response.data);
-        loginMessage.value = error.response.data.message;
+        errorMessage.value = error.response.data.message;
       });
     }
 
     return {
       username,
       password,
-      loginMessage,
+      errorMessage,
       login
     }
   }
@@ -57,7 +58,7 @@ export default {
 
 <style scoped>
 
-#login-view {
+#login-background {
   height: 100vh;
   display: flex;
   justify-content: center;

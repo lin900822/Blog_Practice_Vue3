@@ -46,7 +46,7 @@
 
 <script>
 import {ref, reactive, onMounted} from "vue"
-import api from "../api/index.js";
+import api from "../../api/index.js";
 
 export default {
   name: 'MyNavbar',
@@ -55,7 +55,7 @@ export default {
       categories: [
         {id: 0, name: "關於我", router: "/about"},
         {id: 1, name: "作品集", router: "/portfolio"},
-        {id: 2, name: "學習筆記", router: "/note"}
+        {id: 2, name: "學習筆記", router: "/articles"}
       ]
     });
 
@@ -63,17 +63,21 @@ export default {
     const nickname = ref("");
 
     onMounted(() => {
+      if (!localStorage.getItem("token")) return;
+
       api.getUser().then(response => {
         nickname.value = response.data.nickname;
         isAuthenticated.value = true;
       }).catch(error => {
-
+        console.log(error.response.data);
       });
     });
 
     const logout = () => {
-      localStorage.setItem("token", "");
-      location.reload();
+      if (confirm("您確定要登出嗎?")) {
+        localStorage.setItem("token", "");
+        location.reload();
+      }
     };
 
     return {

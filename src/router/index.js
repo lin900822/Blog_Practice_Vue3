@@ -1,7 +1,8 @@
 import {
-    createRouter, createWebHashHistory
+    createRouter, createWebHistory
 } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import api from "../api/index.js";
 
 const routes = [
     {
@@ -15,6 +16,21 @@ const routes = [
         component: () => import('../views/AboutView.vue')
     },
     {
+        path: '/articles',
+        name: 'articles',
+        component: () => import('../views/ArticleListView.vue')
+    },
+    {
+        path: '/article',
+        name: 'article',
+        component: () => import('../views/ArticleDetailView.vue')
+    },
+    {
+        path: '/404',
+        name: 'about',
+        component: () => import('../views/404View.vue')
+    },
+    {
         path: '/login',
         name: 'login',
         component: () => import('../views/LoginView.vue')
@@ -25,13 +41,33 @@ const routes = [
         component: () => import('../views/RegisterView.vue')
     },
     {
-        path: '/hello',
-        name: 'hello',
-        component: () => import('../components/HelloWorld.vue')
+        path: '/admin',
+        name: 'admin',
+        component: () => import('../views/Admin/AdminView.vue'),
+        meta: {requiresAuth: false}
+    },
+    {
+        path: '/admin/ArticleEditor',
+        name: 'ArticleEditor',
+        component: () => import('../views/Admin/ArticleEditorView.vue'),
+        meta: {requiresAuth: false}
     }
 ]
 const router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes
 })
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        api.isAdmin().then(() => {
+            next();
+        }).catch(() => {
+            next('/404');
+        })
+    } else {
+        next();
+    }
+})
+
 export default router

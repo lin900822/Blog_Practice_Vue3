@@ -9,8 +9,8 @@
 </template>
 
 <script setup>
-import MyNavBar from "../components/MyNavBar.vue";
-import MyFooter from "../components/MyFooter.vue";
+import MyNavBar from "../components/Common/MyNavBar.vue";
+import MyFooter from "../components/Common/MyFooter.vue";
 </script>
 
 <style>

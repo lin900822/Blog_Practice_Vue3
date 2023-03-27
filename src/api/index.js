@@ -13,5 +13,17 @@ export default {
         const formData = new FormData();
         formData.append("token", token);
         return axios.post(path.baseUrl + path.getUser, formData);
+    },
+    register(formData){
+        return axios.post(path.baseUrl + path.register, formData);
+    },
+    isAdmin(){
+        const token = localStorage.getItem("token");
+        const formData = new FormData();
+        formData.append("token", token);
+        return axios.post(path.baseUrl + path.isAdmin, formData);
+    },
+    createArticle(formData){
+        return axios.post(path.baseUrl + path.createArticle, formData);
     }
 }
