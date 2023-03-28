@@ -25,5 +25,13 @@ export default {
     },
     createArticle(formData){
         return axios.post(path.baseUrl + path.createArticle, formData);
+    },
+    getArticleDetail(id){
+        return axios.get(path.baseUrl + path.getArticleDetail + "/" + id);
+    },
+    uploadFile(file){
+        const formData = new FormData();
+        formData.append('multipartFile', file);
+        return axios.post(path.baseUrl + path.uploadFile, formData);
     }
 }

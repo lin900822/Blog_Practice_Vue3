@@ -1,10 +1,10 @@
 <template>
-  <div class="content">
+  <div class="article-editor-detail">
     <div class="left-content">
       <div class="input-container">
         <label for="title" style="width: 70px">標題</label>
         <input type="text" class="form-control" id="title" placeholder="請輸入文章標題" style="margin-right: 10px;"
-               v-model="title">
+               v-model="articleVO.title">
         <button @click="saveContent()" class="btn btn-success" style="height: 35px; width: 75px">保存</button>
       </div>
 
@@ -14,7 +14,7 @@
     </div>
 
     <div class="right-content">
-      <div class="article-detail shadow">
+      <div class="article-info shadow">
         <div style="background-color: #4a4a4a; padding: 1px 0">
           <p style="text-align: center; margin: 5px auto; font-weight: bold; font-size: 24px; color: white">
             文章詳情
@@ -22,18 +22,22 @@
         </div>
 
         <div class="right-content-item">
-          <label for="title">縮圖</label>
-          <button style="display: block;" class="btn btn-outline-secondary">上傳圖片</button>
-          <img src="" alt="">
+          <label>縮圖</label>
+          <label class="btn btn-outline-secondary" style="display: block; width: 120px; height: 35px; font-size: 16px; line-height: 22px;">
+            <input type="file" ref="fileInput" @change="handleFileUpload()" style="display: none;">
+            <i class="bi bi-image"></i>
+            上傳圖片
+          </label>
+          <img :src="articleVO.thumbnail" alt="" style="margin-top: 10px; max-height: 150px; max-width: 100%;">
         </div>
 
         <div class="right-content-item">
-          <label for="title">摘要</label>
-          <textarea type="text" class="form-control" id="title" placeholder="請輸入文章摘要" v-model="summary"/>
+          <label>摘要</label>
+          <textarea type="text" class="form-control" id="title" placeholder="請輸入文章摘要" v-model="articleVO.summary"/>
         </div>
 
         <div class="right-content-item">
-          <label for="category">分類</label>
+          <label>分類</label>
           <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown"
                     aria-expanded="false">
@@ -49,7 +53,7 @@
         </div>
 
         <div class="right-content-item">
-          <label for="category">發布狀態</label>
+          <label>發布狀態</label>
           <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown"
                     aria-expanded="false">
@@ -73,19 +77,31 @@
 
 <script>
 import QuillEditor from "./QuillEditor.vue";
-import {ref} from "vue";
+import {reactive, ref} from "vue";
 import api from "../../api/index.js";
 
 export default {
   name: 'ArticleEditor',
   setup() {
-    const title = ref("");
-    const summary = ref("");
-    const thumbnail = ref("");
-    const categoryId = ref(0);
-    const status = ref(0);
+    const articleVO = reactive({
+      title: "",
+      summary: "",
+      thumbnail: "",
+      category: "",
+      status: 0
+    })
+
+    const fileInput = ref(null);
 
     const editor = ref(null);
+
+    const handleFileUpload = () => {
+      const file = fileInput.value.files[0];
+
+      api.uploadFile(file).then(response => {
+        articleVO.thumbnail = response.data;
+      })
+    };
 
     const saveContent = () => {
       const formData = new FormData();
@@ -95,12 +111,12 @@ export default {
       console.log(content);
 
       formData.append("token", localStorage.getItem("token"));
-      formData.append("title", title.value);
-      formData.append("summary", summary.value);
+      formData.append("title", articleVO.title);
+      formData.append("summary", articleVO.summary);
       formData.append("content", content);
-      formData.append("thumbnail", thumbnail.value);
-      formData.append("categoryId", categoryId.value);
-      formData.append("status", status.value);
+      formData.append("thumbnail", articleVO.thumbnail);
+      formData.append("categoryId", articleVO.category);
+      formData.append("status", articleVO.status);
 
       api.createArticle(formData).then(response => {
         alert("保存成功!");
@@ -109,12 +125,10 @@ export default {
 
     return {
       editor,
+      articleVO,
       saveContent,
-      title,
-      summary,
-      thumbnail,
-      categoryId,
-      status
+      handleFileUpload,
+      fileInput
     }
   },
   components: {
@@ -124,7 +138,7 @@ export default {
 </script>
 
 <style scoped>
-.content {
+.article-editor-detail {
   width: 100%;
   display: flex;
 }
@@ -139,7 +153,7 @@ export default {
   display: inline-block;
   width: 25%;
   margin: 0 10px;
-  padding: 5px;
+  padding: 10px;
 }
 
 .right-content-item {
@@ -147,8 +161,8 @@ export default {
   margin: 10px 0;
 }
 
-.article-detail {
-  height: 700px;
+.article-info {
+  height: 650px;
   background-color: #fafafa;
 }
 
@@ -165,6 +179,8 @@ label {
 }
 
 textarea {
-  height: 100px;
+  min-height: 100px;
+  max-height: 100px;
 }
+
 </style>

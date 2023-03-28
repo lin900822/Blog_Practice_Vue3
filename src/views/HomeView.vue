@@ -21,7 +21,7 @@
 import MyNavBar from "../components/Common/MyNavBar.vue";
 import MyFooter from "../components/Common/MyFooter.vue";
 import SidebarArea from "../components/SidebarArea.vue"
-import ArticleArea from "../components/ArticleArea.vue";
+import ArticleArea from "../components/ArticleListArea.vue";
 </script>
 
 <style>

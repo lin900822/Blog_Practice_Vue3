@@ -6,7 +6,7 @@
 
 <script>
 import {ref, reactive, toRef} from "vue"
-import Article from "./Article.vue";
+import Article from "./ArticlePreview.vue";
 
 export default {
   name: 'ArticleArea',

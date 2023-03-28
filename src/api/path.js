@@ -4,7 +4,9 @@ const base = {
     getUser: "/auth/user",
     register: "/auth/register",
     isAdmin: "/auth/isAdmin",
-    createArticle: "/article/create"
+    createArticle: "/article/create",
+    uploadFile: "/upload/file",
+    getArticleDetail: "/article"
 }
 
 export default base;

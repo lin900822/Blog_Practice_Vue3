@@ -6,7 +6,6 @@
       <!-- Page Content  -->
       <div id="content">
 
-
       </div>
     </div>
   </div>

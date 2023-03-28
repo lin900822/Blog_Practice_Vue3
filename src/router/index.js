@@ -21,7 +21,7 @@ const routes = [
         component: () => import('../views/ArticleListView.vue')
     },
     {
-        path: '/article',
+        path: '/article/:articleId',
         name: 'article',
         component: () => import('../views/ArticleDetailView.vue')
     },
@@ -51,6 +51,11 @@ const routes = [
         name: 'ArticleEditor',
         component: () => import('../views/Admin/ArticleEditorView.vue'),
         meta: {requiresAuth: false}
+    },
+    {
+        path: '/:pathMatch(.*)',
+        name: 'NotFound',
+        component: () => import("../views/404View.vue")
     }
 ]
 const router = createRouter({
