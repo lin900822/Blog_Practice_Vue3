@@ -49,7 +49,6 @@ export default {
           self.deltaX = evt.clientX;
           self.deltaY = evt.clientY;
           self.imgs.forEach(function(img) {
-            console.log(this);
             img.style.width = img.clientWidth + dX + "px";
             img.style.height = "auto";
           });
@@ -59,6 +58,13 @@ export default {
       });
       this.quill.root.addEventListener("mouseup", function(evt) {
         if (self.imgs.length > 0) {
+          let editorWidth = self.quill.root.offsetWidth;
+          self.imgs.forEach(function(img) {
+            let ratio = (img.clientWidth / editorWidth) * 100;
+            img.style.width = ratio + "%";
+            img.style.minWidth = "10%";
+            img.style.height = "auto";
+          });
           self.imgs = [];
           evt.preventDefault();
           evt.stopPropagation();
