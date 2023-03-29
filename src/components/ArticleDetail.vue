@@ -1,8 +1,8 @@
 <template>
-  <div class="article-editor-detail shadow">
+  <div class="article-detail shadow">
     <div style="text-align:center;">
       <img class="shadow" :src='articleContent.thumbnail' alt="" style="width: 100%; margin: 0 auto;"
-      v-show="articleContent.thumbnail != ''">
+           v-show="articleContent.thumbnail != ''">
     </div>
 
     <h1 v-text="articleContent.title"></h1>
@@ -23,12 +23,20 @@
 </template>
 
 <script>
-import {ref, reactive, onMounted} from "vue";
+import {ref, reactive, onMounted, onUpdated} from "vue";
 import api from "../api/index.js";
-import { useRoute } from 'vue-router'
+import {useRoute} from 'vue-router'
+import hljs from "highlight.js/lib/core";
 
 export default {
   name: 'ArticleDetail',
+  updated() {
+    const blocks = this.$el.querySelectorAll('.ql-syntax');
+    blocks.forEach((block) => {
+      // block.classList.add('language-java');
+      hljs.highlightElement(block);
+    });
+  },
   setup() {
     const articleVO = reactive({
       title: "",
@@ -49,7 +57,7 @@ export default {
         articleVO.content = response.data.content;
         articleVO.category = response.data.category;
         articleVO.createdAt = response.data.createdAt;
-      })
+      });
     });
 
     return {
@@ -60,9 +68,9 @@ export default {
 </script>
 
 <style scoped>
-.article-editor-detail {
+.article-detail {
   min-height: 1000px;
-  background-color: #fff;
+  background-color: #fafafa;
   margin: 20px 0;
   padding: 20px 30px;
 }
@@ -90,6 +98,19 @@ h1 {
 
 .content :deep(li) {
   margin-top: 10px;
+}
+
+.content :deep(pre) {
+  padding: 10px;
+  background-color: #474949;
+  color: #f8f8f2;
+  font-size: 16px;
+  line-height: 30px;
+}
+
+.content :deep(pre) span {
+  font-size: 16px;
+  line-height: 30px;
 }
 
 </style>

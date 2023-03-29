@@ -1,5 +1,5 @@
 <template>
-  <div class="article-editor-detail">
+  <div class="article-detail">
     <div class="left-content">
       <div class="input-container">
         <label for="title" style="width: 70px">標題</label>
@@ -155,6 +155,15 @@ export default {
         })
       }
 
+      document.addEventListener('keydown', function(event) {
+        // 如果同时按下Ctrl和S键
+        if (event.ctrlKey && event.keyCode === 83) {
+          event.preventDefault(); // 阻止默认行为，即保存页面
+          // 在这里添加自定义代码，例如发送保存请求等等
+          saveContent();
+        }
+      });
+
     });
 
     return {
@@ -168,11 +177,11 @@ export default {
   components: {
     QuillEditor,
   }
-}
+};
 </script>
 
 <style scoped>
-.article-editor-detail {
+.article-detail {
   width: 100%;
   display: flex;
 }

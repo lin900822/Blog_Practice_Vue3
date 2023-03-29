@@ -7,6 +7,18 @@ import "bootstrap-icons/font/bootstrap-icons.css"
 
 import router from './router'
 
-const app = createApp(App)
+import hljs from 'highlight.js/lib/core';
+import 'highlight.js/styles/rainbow.css';
+
+import java from 'highlight.js/lib/languages/java';
+import csharp from 'highlight.js/lib/languages/csharp';
+import sql from 'highlight.js/lib/languages/sql';
+
+hljs.registerLanguage('java', java);
+hljs.registerLanguage('csharp', csharp);
+hljs.registerLanguage('sql', sql);
+
+const app = createApp(App);
+
 app.use(router)
 app.mount('#app')

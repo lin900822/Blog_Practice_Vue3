@@ -7,6 +7,7 @@ import {ref, onMounted, onUnmounted} from 'vue';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 import api from "../../api/index.js";
+import hljs from "highlight.js/lib/core";
 
 export default {
   name: 'QuillEditor',
@@ -78,6 +79,10 @@ export default {
       if (editor) {
         quillEditor = new Quill(editor, {
           modules: {
+            syntax: {
+              highlight: text => hljs.highlightAuto(text).value,
+              syntax: 'java' // 设置默认语言为 JavaScript
+            },
             resizeImage: true,
             toolbar: [
               ['bold', 'italic', 'underline', 'strike'],
@@ -113,6 +118,18 @@ export default {
             });
           });
         });
+
+        quillEditor.on('editor-change', (eventName, delta, oldDelta) => {
+          // 在这里编写事件处理逻辑
+          const blocks = document.querySelectorAll('.ql-syntax');
+          blocks.forEach((block) => {
+            block.style.backgroundColor = '#474949';
+            block.style.color = '#f8f8f2';
+            block.style.fontSize = '14px';
+            block.style.lineHeight = '30px';
+          });
+        });
+
       }
     });
 
@@ -135,6 +152,7 @@ export default {
     }
   }
 }
+
 </script>
 
 <style scoped>
@@ -142,4 +160,13 @@ export default {
   font-size: 20px;
   height: 80vh;
 }
+
+pre.ql-syntax {
+  padding: 10px;
+  background-color: #474949;
+  color: #f8f8f2;
+  font-size: 16px;
+  line-height: 30px;
+}
+
 </style>

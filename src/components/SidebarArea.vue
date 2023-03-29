@@ -13,7 +13,7 @@ export default {
 <style scoped>
 #content-root{
   height: 900px;
-  background-color: #fff;
+  background-color: #fafafa;
   margin: 20px auto;
 }
 </style>
