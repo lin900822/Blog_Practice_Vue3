@@ -23,8 +23,9 @@
 
         <div class="right-content-item">
           <label>縮圖</label>
-          <label class="btn btn-outline-secondary" style="display: block; width: 120px; height: 35px; font-size: 16px; line-height: 22px;">
-            <input type="file" ref="fileInput" @change="handleFileUpload()" style="display: none;">
+          <label class="btn btn-outline-secondary"
+                 style="display: block; width: 120px; height: 35px; font-size: 16px; line-height: 22px;">
+            <input type="file" ref="fileInput" @change="handleThumbnailUpload()" style="display: none;">
             <i class="bi bi-image"></i>
             上傳圖片
           </label>
@@ -33,7 +34,8 @@
 
         <div class="right-content-item">
           <label>摘要</label>
-          <textarea type="text" class="form-control" id="title" placeholder="請輸入文章摘要" v-model="articleVO.summary"/>
+          <textarea type="text" class="form-control" id="title" placeholder="請輸入文章摘要"
+                    v-model="articleVO.summary"/>
         </div>
 
         <div class="right-content-item">
@@ -77,25 +79,32 @@
 
 <script>
 import QuillEditor from "./QuillEditor.vue";
-import {reactive, ref} from "vue";
+import {onMounted, reactive, ref, toRaw, toRefs} from "vue";
 import api from "../../api/index.js";
+import {useRoute} from "vue-router";
 
 export default {
   name: 'ArticleEditor',
   setup() {
+    const route = useRoute();
+    const articleId = route.params.articleId;
+
     const articleVO = reactive({
       title: "",
       summary: "",
       thumbnail: "",
+      content: "",
       category: "",
-      status: 0
+      status: 0,
+      createdAt: "",
+      updatedAt: ""
     })
 
     const fileInput = ref(null);
 
     const editor = ref(null);
 
-    const handleFileUpload = () => {
+    const handleThumbnailUpload = () => {
       const file = fileInput.value.files[0];
 
       api.uploadFile(file).then(response => {
@@ -106,28 +115,53 @@ export default {
     const saveContent = () => {
       const formData = new FormData();
 
-      const content = editor.value.getContent();
-
-      console.log(content);
+      articleVO.content = editor.value.getContent();
 
       formData.append("token", localStorage.getItem("token"));
+
+      if (articleId != null)
+        formData.append("id", articleId);
+
       formData.append("title", articleVO.title);
       formData.append("summary", articleVO.summary);
-      formData.append("content", content);
       formData.append("thumbnail", articleVO.thumbnail);
-      formData.append("categoryId", articleVO.category);
+      formData.append("content", articleVO.content);
+      formData.append("category", articleVO.category);
       formData.append("status", articleVO.status);
 
-      api.createArticle(formData).then(response => {
+      api.saveArticle(formData).then(response => {
         alert("保存成功!");
-      })
+
+        if (articleId == null)
+          location.href = "/admin/ArticleEditor/" + response.data;
+      });
     };
+
+    onMounted(() => {
+      if (articleId != null) {
+        api.getArticleDetail(articleId).then(response => {
+          articleVO.title = response.data.title;
+          articleVO.summary = response.data.summary;
+          articleVO.thumbnail = response.data.thumbnail;
+          articleVO.content = response.data.content;
+          articleVO.category = response.data.category;
+          articleVO.status = response.data.status;
+          articleVO.createdAt = response.data.createdAt;
+          articleVO.updatedAt = response.data.updatedAt;
+
+          editor.value.setContent(articleVO.content);
+        }).catch(() => {
+          location.href = "/admin/ArticleEditor";
+        })
+      }
+
+    });
 
     return {
       editor,
       articleVO,
       saveContent,
-      handleFileUpload,
+      handleThumbnailUpload,
       fileInput
     }
   },

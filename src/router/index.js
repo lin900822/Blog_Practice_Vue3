@@ -48,7 +48,13 @@ const routes = [
     },
     {
         path: '/admin/ArticleEditor',
-        name: 'ArticleEditor',
+        name: 'ArticleEditorCreate',
+        component: () => import('../views/Admin/ArticleEditorView.vue'),
+        meta: {requiresAuth: false}
+    },
+    {
+        path: '/admin/ArticleEditor/:articleId',
+        name: 'ArticleEditorUpdate',
         component: () => import('../views/Admin/ArticleEditorView.vue'),
         meta: {requiresAuth: false}
     },

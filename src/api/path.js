@@ -4,7 +4,7 @@ const base = {
     getUser: "/auth/user",
     register: "/auth/register",
     isAdmin: "/auth/isAdmin",
-    createArticle: "/article/create",
+    saveArticle: "/article/save",
     uploadFile: "/upload/file",
     getArticleDetail: "/article"
 }

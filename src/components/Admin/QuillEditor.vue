@@ -8,13 +8,10 @@ import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 import api from "../../api/index.js";
 
-
 export default {
   name: 'QuillEditor',
   setup() {
     const quillEditorElement = ref(null);
-
-    let quillEditor = null;
 
     const handleImageUpload = (file) => {
       return api.uploadFile(file).then(response => {
@@ -74,6 +71,8 @@ export default {
 
     Quill.register("modules/resizeImage", ResizeImage);
 
+    let quillEditor = null;
+
     onMounted(() => {
       const editor = quillEditorElement.value;
       if (editor) {
@@ -123,11 +122,16 @@ export default {
 
     const getContent = () => {
       return quillEditorElement.value.querySelector('.ql-editor').innerHTML;
-    }
+    };
+
+    const setContent = (content) => {
+      quillEditorElement.value.querySelector('.ql-editor').innerHTML = content;
+    };
 
     return {
       quillEditorElement,
-      getContent
+      getContent,
+      setContent
     }
   }
 }

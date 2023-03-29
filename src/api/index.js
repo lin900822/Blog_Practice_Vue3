@@ -23,8 +23,8 @@ export default {
         formData.append("token", token);
         return axios.post(path.baseUrl + path.isAdmin, formData);
     },
-    createArticle(formData){
-        return axios.post(path.baseUrl + path.createArticle, formData);
+    saveArticle(formData){
+        return axios.post(path.baseUrl + path.saveArticle, formData);
     },
     getArticleDetail(id){
         return axios.get(path.baseUrl + path.getArticleDetail + "/" + id);
