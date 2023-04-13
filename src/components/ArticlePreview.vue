@@ -1,29 +1,22 @@
 <template>
   <div id="article" class="shadow">
-    <div class="container no-gutters">
-      <div class="row no-gutters p-0">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 no-gutters p-0 overflow-hidden">
-          <div class="thumbnail">
-            <img :src="state.thumbnailUrl" alt="">
-          </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8 no-gutters p-0">
-          <div class="info">
-            <router-link to="/" class="title">
-              <h1 v-text="state.title"></h1>
-            </router-link>
-            <p class="details">
-              <i class="bi-clock"></i>
-              <span v-text="state.date"></span>
-              <i class="bi bi-folder"></i>
-              <span v-text="state.category"></span>
-            </p>
-            <p class="summary" v-text="state.summary"></p>
-            <router-link to="/" class="readmore">閱讀更多...</router-link>
-          </div>
-        </div>
-      </div>
+    <div class="thumbnail" v-show="articleData.thumbnail.length !== 0">
+      <img :src="articleData.thumbnail" alt="">
     </div>
+    <div class="info">
+      <router-link :to="'/article/' + articleData.id" class="title">
+        <h1 v-text="articleData.title"></h1>
+      </router-link>
+      <p class="details">
+        <i class="bi-clock"></i>
+        <span v-text="articleData.date"></span>
+        <i class="bi bi-folder"></i>
+        <span v-text="articleData.category"></span>
+      </p>
+      <p class="summary" v-text="articleData.summary"></p>
+      <router-link :to="'/article/' + articleData.id" class="readmore">閱讀更多...</router-link>
+    </div>
+
   </div>
 </template>
 
@@ -36,9 +29,9 @@ export default {
     articleData: {}
   },
   setup(props,ctx) {
-    const state = reactive(props.articleData)
+    const articleData = reactive(props.articleData)
     return {
-      state
+      articleData
     }
   }
 };
@@ -67,7 +60,7 @@ export default {
 }
 
 .info {
-  padding: 15px;
+  padding: 25px;
   position: relative;
 }
 

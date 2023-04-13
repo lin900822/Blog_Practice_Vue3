@@ -1,63 +1,85 @@
 <template>
   <div class="" id="content-root">
-    <Article v-for="articleData in state.articleDataList" :article-data="articleData"></Article>
+    <div>
+      <Article v-for="articleData in articleList" :article-data="articleData"></Article>
+    </div>
+    <div style="height: 100px; display: flex; justify-content: center; align-items: center;">
+      <div class="page-selection">
+        <button class="page-button" @click.prevent="changePage(pageInfo.prePage)">
+          <i class="bi bi-chevron-left" style="font-size: 20px; text-align: center;"></i>
+        </button>
+
+        <button class="page-button" @click.prevent="changePage(n)" v-for="n in pageInfo.navigatepageNums"
+                :class="{ 'button-selected': n == pageInfo.pageNum }">
+          <span style="font-size: 20px; text-align: center;" v-text="n"></span>
+        </button>
+
+        <button class="page-button" @click.prevent="changePage(pageInfo.nextPage)">
+          <i class="bi bi-chevron-right" style="font-size: 20px; text-align: center;"></i>
+        </button>
+
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import {ref, reactive, toRef} from "vue"
+import {onMounted, ref} from "vue"
 import Article from "./ArticlePreview.vue";
+import api from "../api/index.js";
 
 export default {
   name: 'ArticleArea',
   components: {Article},
   setup() {
-    const state = reactive({
-      articleDataList:[
-        {
-          id: 0,
-          thumbnailUrl: "/src/assets/1.jpg",
-          title: "Fusion 快速建立Session範本",
-          date: "2023/03/08",
-          category: "Unity",
-          summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id luctus urna. Quisque ullamcorper sit amet dui at interdum. Nam mauris diam, fermentum eget diam sit amet, ullamcorper mattis tortor."
-        },
-        {
-          id: 1,
-          thumbnailUrl: "/src/assets/2.jpg",
-          title: "Mybatis 當查詢的字段名和封裝數據對象的屬性名不一致時，必須單獨指定",
-          date: "2019/05/02",
-          category: "Java",
-          summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id luctus urna. Quisque ullamcorper sit amet dui at interdum. Nam mauris diam, fermentum eget diam sit amet, ullamcorper mattis tortor."
-        },
-        {
-          id: 2,
-          thumbnailUrl: "/src/assets/3.jpg",
-          title: "Mybatis 當查詢的字段名和封裝數據對象的屬性名不一致時，必須單獨指定",
-          date: "2019/05/02",
-          category: "Java",
-          summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id luctus urna. Quisque ullamcorper sit amet dui at interdum. Nam mauris diam, fermentum eget diam sit amet, ullamcorper mattis tortor."
-        },
-        {
-          id: 3,
-          thumbnailUrl: "/src/assets/1.jpg",
-          title: "Mybatis 當查詢的字段名和封裝數據對象的屬性名不一致時，必須單獨指定",
-          date: "2019/05/02",
-          category: "Java",
-          summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id luctus urna. Quisque ullamcorper sit amet dui at interdum. Nam mauris diam, fermentum eget diam sit amet, ullamcorper mattis tortor."
-        }
-      ]
-    })
+    const articleList = ref([]);
+    const pageInfo = ref({});
+
+    onMounted(() => {
+      const pageNum = location.search.split("=")[1];
+
+      articleList.value = [];
+      pageInfo.value = {};
+      api.getAllArticles(pageNum).then(response => {
+        articleList.value = response.data.list;
+        pageInfo.value = response.data;
+      })
+    });
+
+    const changePage = (pageNum) => {
+      if(pageNum < 1 || pageNum > pageInfo.value.pages) return;
+
+      location.href = "/articles?page=" + pageNum;
+    }
+
     return {
-      state
+      articleList,
+      pageInfo,
+      changePage
     }
   }
 }
 </script>
 
 <style scoped>
-#content-root{
+#content-root {
   margin: 0px 0px 20px 0px;
   overflow: hidden;
 }
+
+.page-selection {
+
+}
+
+.page-button {
+  background-color: #fff;
+  width: 35px;
+  height: 35px;
+  margin: 0 2px 0 2px;
+}
+
+.button-selected{
+  background-color: #999;
+}
+
 </style>

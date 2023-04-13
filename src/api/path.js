@@ -6,7 +6,8 @@ const base = {
     isAdmin: "/auth/isAdmin",
     saveArticle: "/article/save",
     uploadFile: "/upload/file",
-    getArticleDetail: "/article"
+    getArticleDetail: "/article",
+    getAllArticles: "/article/all"
 }
 
 export default base;

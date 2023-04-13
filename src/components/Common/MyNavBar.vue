@@ -55,7 +55,7 @@ export default {
       categories: [
         {id: 0, name: "關於我", router: "/about"},
         {id: 1, name: "作品集", router: "/portfolio"},
-        {id: 2, name: "學習筆記", router: "/articles"}
+        {id: 2, name: "學習筆記", router: "/articles?page=1"}
       ]
     });
 
