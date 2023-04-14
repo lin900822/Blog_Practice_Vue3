@@ -32,6 +32,9 @@ export default {
     getAllArticles(pageNum){
         return axios.get(path.baseUrl + path.getAllArticles + "?pageNum=" + pageNum);
     },
+    deleteArticle(id){
+        return axios.get(path.baseUrl + path.deleteArticle + "/" + id);
+    },
     uploadFile(file){
         const formData = new FormData();
         formData.append('multipartFile', file);

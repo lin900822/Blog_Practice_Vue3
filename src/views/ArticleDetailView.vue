@@ -24,7 +24,6 @@ import MyNavBar from "../components/Common/MyNavBar.vue";
 import MyFooter from "../components/Common/MyFooter.vue";
 import SidebarArea from "../components/SidebarArea.vue";
 import ArticleDetail from "../components/ArticleDetail.vue";
-import {ref, reactive, onMounted} from "vue";
 
 export default {
   name: 'ArticleDetailView',

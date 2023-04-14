@@ -5,6 +5,11 @@
       <AdminSideBar id="sidebar"></AdminSideBar>
       <!-- Page Content  -->
       <div id="content">
+        <button type="button" id="sidebarCollapse" class="btn" style="background-color: #333; color: white; border-radius: 0px">
+          <span>
+            <i class="bi bi-speedometer"></i>
+          </span>
+        </button>
 
       </div>
     </div>

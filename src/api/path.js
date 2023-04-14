@@ -7,7 +7,8 @@ const base = {
     saveArticle: "/article/save",
     uploadFile: "/upload/file",
     getArticleDetail: "/article",
-    getAllArticles: "/article/all"
+    getAllArticles: "/article/all",
+    deleteArticle: "/article/delete"
 }
 
 export default base;

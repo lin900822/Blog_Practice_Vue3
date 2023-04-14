@@ -59,6 +59,12 @@ const routes = [
         meta: {requiresAuth: false}
     },
     {
+        path: '/admin/ArticleList',
+        name: 'ArticleList',
+        component: () => import('../views/Admin/AdminArticleList.vue'),
+        meta: {requiresAuth: false}
+    },
+    {
         path: '/:pathMatch(.*)',
         name: 'NotFound',
         component: () => import("../views/404View.vue")

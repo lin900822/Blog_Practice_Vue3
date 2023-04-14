@@ -169,4 +169,23 @@ pre.ql-syntax {
   line-height: 30px;
 }
 
+#quillEditor :deep(.ql-editor) {
+  margin-top: 0px;
+}
+
+#quillEditor :deep(*) {
+  font-size: 20px;
+  line-height: 36px;
+  margin-top: 30px;
+}
+
+#quillEditor :deep(h2) {
+  font-size: 36px;
+  font-weight: bolder;
+}
+
+#quillEditor :deep(li) {
+  margin-top: 10px;
+}
+
 </style>

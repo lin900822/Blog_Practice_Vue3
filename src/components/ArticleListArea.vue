@@ -4,7 +4,7 @@
       <Article v-for="articleData in articleList" :article-data="articleData"></Article>
     </div>
     <div style="height: 100px; display: flex; justify-content: center; align-items: center;">
-      <div class="page-selection">
+      <div>
         <button class="page-button" @click.prevent="changePage(pageInfo.prePage)">
           <i class="bi bi-chevron-left" style="font-size: 20px; text-align: center;"></i>
         </button>
@@ -65,10 +65,6 @@ export default {
 #content-root {
   margin: 0px 0px 20px 0px;
   overflow: hidden;
-}
-
-.page-selection {
-
 }
 
 .page-button {

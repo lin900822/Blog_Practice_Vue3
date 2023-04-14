@@ -57,6 +57,8 @@ export default {
         articleVO.content = response.data.content;
         articleVO.category = response.data.category;
         articleVO.createdAt = response.data.createdAt;
+      }).catch(() => {
+        location.href = "/404";
       });
     });
 

@@ -9,7 +9,7 @@
       </router-link>
       <p class="details">
         <i class="bi-clock"></i>
-        <span v-text="articleData.date"></span>
+        <span v-text="articleData.updatedAt"></span>
         <i class="bi bi-folder"></i>
         <span v-text="articleData.category"></span>
       </p>
@@ -51,6 +51,7 @@ export default {
   padding: 15px;
   height: 100%;
   overflow: hidden;
+  margin-bottom: 10px;
 }
 
 .thumbnail > img {
@@ -69,7 +70,6 @@ export default {
 }
 
 .title > h1 {
-  margin-top: 20px;
   font-size: 28px;
   font-weight: bold;
   color: black;
