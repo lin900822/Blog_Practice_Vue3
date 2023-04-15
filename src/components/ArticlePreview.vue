@@ -1,7 +1,9 @@
 <template>
   <div id="article" class="shadow">
     <div class="thumbnail" v-show="articleData.thumbnail.length !== 0">
-      <img :src="articleData.thumbnail" alt="">
+      <router-link :to="'/article/' + articleData.id">
+        <img class="shadow" :src="articleData.thumbnail" alt="">
+      </router-link>
     </div>
     <div class="info">
       <router-link :to="'/article/' + articleData.id" class="title">
@@ -14,7 +16,7 @@
         <span v-text="articleData.category"></span>
       </p>
       <p class="summary" v-text="articleData.summary"></p>
-      <router-link :to="'/article/' + articleData.id" class="readmore">閱讀更多...</router-link>
+      <router-link :to="'/article/' + articleData.id" class="readmore" style="color: #999; font-weight:bold;">閱讀更多...</router-link>
     </div>
 
   </div>

@@ -95,9 +95,8 @@ export default {
               [{'size': ['small', false, 'large', 'huge']}],
               [{'header': [1, 2, 3, 4, 5, 6, false]}],
               [{'color': []}, {'background': []}],
-              [{'font': []}],
               [{'align': []}],
-              ['image'],
+              ['image', 'link'],
               ['clean']
             ],
           },
@@ -186,6 +185,19 @@ pre.ql-syntax {
 
 #quillEditor :deep(li) {
   margin-top: 10px;
+}
+
+#quillEditor :deep(pre) {
+  padding: 10px;
+  background-color: #474949;
+  color: #f8f8f2;
+  font-size: 16px;
+  line-height: 30px;
+}
+
+#quillEditor :deep(pre) span {
+  font-size: 16px;
+  line-height: 30px;
 }
 
 </style>

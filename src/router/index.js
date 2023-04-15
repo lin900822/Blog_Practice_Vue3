@@ -60,8 +60,14 @@ const routes = [
     },
     {
         path: '/admin/ArticleList',
-        name: 'ArticleList',
-        component: () => import('../views/Admin/AdminArticleList.vue'),
+        name: 'AdminArticleListView',
+        component: () => import('../views/Admin/AdminArticleListView.vue'),
+        meta: {requiresAuth: false}
+    },
+    {
+        path: '/admin/Category',
+        name: 'AdminCategoryView',
+        component: () => import('../views/Admin/AdminCategoryView.vue'),
         meta: {requiresAuth: false}
     },
     {

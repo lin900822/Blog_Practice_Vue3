@@ -8,7 +8,10 @@ const base = {
     uploadFile: "/upload/file",
     getArticleDetail: "/article",
     getAllArticles: "/article/all",
-    deleteArticle: "/article/delete"
+    deleteArticle: "/article/delete",
+    getAllCategoriesTree: "/category/getAllCategoriesTree",
+    addCategory: "/category/add",
+    deleteCategory: "/category/delete"
 }
 
 export default base;

@@ -41,7 +41,7 @@
         </a>
         <ul class="collapse list-unstyled" id="categorySubmenu">
           <li>
-            <a href="#">分類列表</a>
+            <a href="/admin/Category">分類列表</a>
           </li>
         </ul>
 

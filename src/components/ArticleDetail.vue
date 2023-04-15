@@ -1,7 +1,7 @@
 <template>
   <div class="article-detail shadow">
     <div style="text-align:center;">
-      <img class="shadow" :src='articleContent.thumbnail' alt="" style="width: 100%; margin: 0 auto;"
+      <img class="shadow" :src='articleContent.thumbnail' alt="" style="max-height: 720px; margin: 0 auto;"
            v-show="articleContent.thumbnail != ''">
     </div>
 

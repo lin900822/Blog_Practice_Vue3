@@ -35,6 +35,20 @@ export default {
     deleteArticle(id){
         return axios.get(path.baseUrl + path.deleteArticle + "/" + id);
     },
+    getAllCategoriesTree(){
+        return axios.get(path.baseUrl + path.getAllCategoriesTree);
+    },
+    addCategory(name, ancestorId){
+        const formData = new FormData();
+        formData.append("name", name);
+        if(ancestorId != null)
+            formData.append("ancestorId", ancestorId);
+
+        return axios.post(path.baseUrl + path.addCategory, formData);
+    },
+    deleteCategory(id){
+        return axios.get(path.baseUrl + path.deleteCategory + "/" + id);
+    },
     uploadFile(file){
         const formData = new FormData();
         formData.append('multipartFile', file);
