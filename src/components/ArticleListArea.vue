@@ -43,6 +43,12 @@ export default {
       api.getAllArticles(pageNum).then(response => {
         articleList.value = response.data.list;
         pageInfo.value = response.data;
+
+        for (let i = 0; i < articleList.value.length; i++) {
+          if(articleList.value[i].category.length == 0){
+            articleList.value[i].category="未分類";
+          }
+        }
       })
     });
 

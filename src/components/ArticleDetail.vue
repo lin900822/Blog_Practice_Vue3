@@ -6,7 +6,7 @@
     </div>
 
     <h1 v-text="articleContent.title"></h1>
-    <p>
+    <p class="article-info">
       <i class="bi bi-clock"></i>
       <span v-text="articleContent.createdAt"></span>
 
@@ -113,6 +113,10 @@ h1 {
 .content :deep(pre) span {
   font-size: 16px;
   line-height: 30px;
+}
+
+.article-info * {
+  margin: auto 5px;
 }
 
 </style>

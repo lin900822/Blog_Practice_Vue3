@@ -40,34 +40,20 @@
 
         <div class="right-content-item">
           <label>分類</label>
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-              未分類
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </div>
+          <select class="form-control" id="category" v-model="articleVO.category">
+            <option v-for="c in categories" :value="c.name">
+              <span v-for="n in c.level">--</span>
+              {{c.name}}
+            </option>
+          </select>
         </div>
 
         <div class="right-content-item">
           <label>發布狀態</label>
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-              草稿
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </div>
+          <select class="form-control" id="status" v-model="articleVO.status">
+            <option value="0">不公開</option>
+            <option value="1">公開</option>
+          </select>
         </div>
 
       </div>
@@ -83,11 +69,17 @@ import {onMounted, reactive, ref, toRaw, toRefs} from "vue";
 import api from "../../api/index.js";
 import {useRoute} from "vue-router";
 
+
 export default {
   name: 'ArticleEditor',
+  components: {
+    QuillEditor
+  },
   setup() {
     const route = useRoute();
     const articleId = route.params.articleId;
+
+    const categories = ref([]);
 
     const articleVO = reactive({
       title: "",
@@ -164,18 +156,20 @@ export default {
         }
       });
 
+      api.getAllCategoriesTree().then(response => {
+        categories.value = response.data;
+      })
+
     });
 
     return {
+      categories,
       editor,
       articleVO,
       saveContent,
       handleThumbnailUpload,
       fileInput
     }
-  },
-  components: {
-    QuillEditor,
   }
 };
 </script>
