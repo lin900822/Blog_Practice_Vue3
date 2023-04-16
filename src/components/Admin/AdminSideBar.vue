@@ -30,7 +30,7 @@
             <a href="/admin/ArticleEditor">新增文章</a>
           </li>
           <li>
-            <a href="/admin/ArticleList?page=1">文章列表</a>
+            <a href="/admin/ArticleList">文章列表</a>
           </li>
         </ul>
 

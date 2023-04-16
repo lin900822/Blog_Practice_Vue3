@@ -60,7 +60,10 @@ export default {
     const pageInfo = ref({});
 
     onMounted(() => {
-      const pageNum = location.search.split("=")[1];
+      const params = new URLSearchParams(location.search);
+
+      let pageNum = params.get("page");
+      if(pageNum == null) pageNum = 1;
 
       articleList.value = [];
       pageInfo.value = {};

@@ -12,7 +12,7 @@
       <p class="details">
         <i class="bi-clock"></i>
         <span v-text="articleData.updatedAt"></span>
-        <i class="bi bi-folder"></i>
+        <i class="bi bi-tags"></i>
         <span v-text="articleData.category"></span>
       </p>
       <p class="summary" v-text="articleData.summary"></p>

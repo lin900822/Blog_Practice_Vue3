@@ -8,6 +8,7 @@ const base = {
     uploadFile: "/upload/file",
     getArticleDetail: "/article",
     getAllArticles: "/article/all",
+    getArticlesByCategories: "/article/category",
     deleteArticle: "/article/delete",
     getAllCategoriesTree: "/category/getAllCategoriesTree",
     addCategory: "/category/add",

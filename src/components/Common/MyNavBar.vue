@@ -12,14 +12,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <router-link class="nav-link active" aria-current="page" to="/">
-                <span>首頁</span>
-              </router-link>
+              <a href="" @click.prevent="loadPage('/')">首頁</a>
             </li>
             <li class="nav-item" v-for="category in state.categories">
-              <router-link class="nav-link active" aria-current="page" :to="category.router">
-                <span v-text="category.name"/>
-              </router-link>
+              <a href="" @click.prevent="loadPage(category.router)" v-text="category.name"></a>
             </li>
           </ul>
 
@@ -55,12 +51,16 @@ export default {
       categories: [
         {id: 0, name: "關於我", router: "/about"},
         {id: 1, name: "作品集", router: "/portfolio"},
-        {id: 2, name: "學習筆記", router: "/articles?page=1"}
+        {id: 2, name: "學習筆記", router: "/articles"}
       ]
     });
 
     const isAuthenticated = ref(false);
     const nickname = ref("");
+
+    const loadPage = (url) => {
+      location.href = url;
+    }
 
     onMounted(() => {
       if (!localStorage.getItem("token")) return;
@@ -84,7 +84,8 @@ export default {
       state,
       isAuthenticated,
       nickname,
-      logout
+      logout,
+      loadPage
     }
   }
 }
@@ -111,6 +112,12 @@ li {
 .log-reg {
   display: flex;
   float: right;
+}
+
+a {
+  text-decoration: none; /* 去除下划线 */
+  color: inherit; /* 继承父元素的文本颜色 */
+  margin-right: 15px;
 }
 
 </style>

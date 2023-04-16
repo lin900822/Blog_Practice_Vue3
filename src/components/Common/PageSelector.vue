@@ -35,7 +35,12 @@ export default {
     const changePage = (pageNum) => {
       if (pageNum < 1 || pageNum > props.pageInfo.pages) return;
 
-      location.href = props.pageLink + "?page=" + pageNum;
+      const params = new URLSearchParams(location.search);
+
+      if(params.has("category") )
+        location.href = props.pageLink + "?page=" + pageNum + "&category=" + params.get("category");
+      else
+        location.href = props.pageLink + "?page=" + pageNum;
     };
 
     return {
