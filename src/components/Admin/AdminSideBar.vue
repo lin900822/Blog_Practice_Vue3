@@ -45,30 +45,30 @@
           </li>
         </ul>
 
-        <a data-bs-toggle="collapse" href="#navBarSubmenu" role="button" aria-expanded="false"
-           aria-controls="navBarSubmenu">
-          <i class="bi bi-bookmark-check-fill"></i>
-          導覽列
-        </a>
-        <ul class="collapse list-unstyled" id="navBarSubmenu">
-          <li>
-            <a href="#">設定</a>
-          </li>
-        </ul>
+<!--        <a data-bs-toggle="collapse" href="#navBarSubmenu" role="button" aria-expanded="false"-->
+<!--           aria-controls="navBarSubmenu">-->
+<!--          <i class="bi bi-bookmark-check-fill"></i>-->
+<!--          導覽列-->
+<!--        </a>-->
+<!--        <ul class="collapse list-unstyled" id="navBarSubmenu">-->
+<!--          <li>-->
+<!--            <a href="#">設定</a>-->
+<!--          </li>-->
+<!--        </ul>-->
 
-        <a data-bs-toggle="collapse" href="#sideBarSubmenu" role="button" aria-expanded="false"
-           aria-controls="sideBarSubmenu">
-          <i class="bi bi-wrench"></i>
-          側邊欄
-        </a>
-        <ul class="collapse list-unstyled" id="sideBarSubmenu">
-          <li>
-            <a href="#">新增欄位</a>
-          </li>
-          <li>
-            <a href="#">欄位列表</a>
-          </li>
-        </ul>
+<!--        <a data-bs-toggle="collapse" href="#sideBarSubmenu" role="button" aria-expanded="false"-->
+<!--           aria-controls="sideBarSubmenu">-->
+<!--          <i class="bi bi-wrench"></i>-->
+<!--          側邊欄-->
+<!--        </a>-->
+<!--        <ul class="collapse list-unstyled" id="sideBarSubmenu">-->
+<!--          <li>-->
+<!--            <a href="#">新增欄位</a>-->
+<!--          </li>-->
+<!--          <li>-->
+<!--            <a href="#">欄位列表</a>-->
+<!--          </li>-->
+<!--        </ul>-->
 
         <a data-bs-toggle="collapse" href="#resourcesSubmenu" role="button" aria-expanded="false"
            aria-controls="resourcesSubmenu">
@@ -77,7 +77,7 @@
         </a>
         <ul class="collapse list-unstyled" id="resourcesSubmenu">
           <li>
-            <a href="#">資源列表</a>
+            <a href="/admin/Resource">資源列表</a>
           </li>
         </ul>
 

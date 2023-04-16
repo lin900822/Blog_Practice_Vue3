@@ -16,7 +16,7 @@
         <span v-text="articleData.category"></span>
       </p>
       <p class="summary" v-text="articleData.summary"></p>
-      <router-link :to="'/article/' + articleData.id" class="readmore" style="color: #999; font-weight:bold;">閱讀更多...</router-link>
+      <router-link :to="'/article/' + articleData.id" class="readmore" style="color: #999; font-weight:bold;">閱讀更多<i class="bi bi-chevron-right"></i></router-link>
     </div>
 
   </div>
@@ -84,9 +84,11 @@ export default {
 }
 
 .summary {
-  height: 80px;
+  height: 75px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  overflow-wrap: break-word;
 }
 
 .readmore {

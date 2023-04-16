@@ -71,6 +71,12 @@ const routes = [
         meta: {requiresAuth: false}
     },
     {
+        path: '/admin/Resource',
+        name: 'AdminResourceView',
+        component: () => import('../views/Admin/AdminResourceView.vue'),
+        meta: {requiresAuth: false}
+    },
+    {
         path: '/:pathMatch(.*)',
         name: 'NotFound',
         component: () => import("../views/404View.vue")

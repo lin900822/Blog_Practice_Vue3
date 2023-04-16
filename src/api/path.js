@@ -5,14 +5,16 @@ const base = {
     register: "/auth/register",
     isAdmin: "/auth/isAdmin",
     saveArticle: "/article/save",
-    uploadFile: "/upload/file",
+    uploadFile: "/resource/upload",
     getArticleDetail: "/article",
     getAllArticles: "/article/all",
     getArticlesByCategories: "/article/category",
     deleteArticle: "/article/delete",
     getAllCategoriesTree: "/category/getAllCategoriesTree",
     addCategory: "/category/add",
-    deleteCategory: "/category/delete"
+    deleteCategory: "/category/delete",
+    getAllResources: "/resource/allResources",
+    deleteResource: "/resource/delete"
 }
 
 export default base;

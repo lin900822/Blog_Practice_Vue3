@@ -23,12 +23,23 @@
 
         <div class="right-content-item">
           <label>縮圖</label>
-          <label class="btn btn-outline-secondary"
-                 style="display: block; width: 120px; height: 35px; font-size: 16px; line-height: 22px;">
-            <input type="file" ref="fileInput" @change="handleThumbnailUpload()" style="display: none;">
-            <i class="bi bi-image"></i>
-            上傳圖片
-          </label>
+          <div>
+            <label class="btn btn-outline-secondary"
+                   style="display: inline-block; width: 120px; height: 35px; font-size: 16px; line-height: 22px;">
+              <input type="file" ref="fileInput" @change="handleThumbnailUpload()" style="display: none;">
+              <!--            <i class="bi bi-image"></i>-->
+              上傳圖片
+            </label>
+            <label class="btn btn-outline-secondary"
+                    style="display: inline-block; width: 120px; height: 35px; font-size: 16px; line-height: 22px;">
+              資源庫
+            </label>
+            <label class="btn btn-outline-secondary"
+                   style="display: inline-block; width: 50px; height: 35px; font-size: 16px; line-height: 22px;">
+              <i class="bi bi-trash-fill"></i>
+            </label>
+          </div>
+
           <img :src="articleVO.thumbnail" alt="" style="margin-top: 10px; max-height: 150px; max-width: 100%;">
         </div>
 
