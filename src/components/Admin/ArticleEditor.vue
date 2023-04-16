@@ -25,17 +25,13 @@
           <label>縮圖</label>
           <div>
             <label class="btn btn-outline-secondary"
-                   style="display: inline-block; width: 120px; height: 35px; font-size: 16px; line-height: 22px;">
-              <input type="file" ref="fileInput" @change="handleThumbnailUpload()" style="display: none;">
-              <!--            <i class="bi bi-image"></i>-->
-              上傳圖片
+                    style="display: inline-block; width: 120px; height: 35px; font-size: 16px; line-height: 22px;"
+                    @click.prevent="openResourceSelector">
+              選擇圖片
             </label>
             <label class="btn btn-outline-secondary"
-                    style="display: inline-block; width: 120px; height: 35px; font-size: 16px; line-height: 22px;">
-              資源庫
-            </label>
-            <label class="btn btn-outline-secondary"
-                   style="display: inline-block; width: 50px; height: 35px; font-size: 16px; line-height: 22px;">
+                   style="display: inline-block; width: 50px; height: 35px; font-size: 16px; line-height: 22px;"
+                    @click="clearThumbnail">
               <i class="bi bi-trash-fill"></i>
             </label>
           </div>
@@ -69,9 +65,10 @@
 
       </div>
     </div>
-
-
   </div>
+
+  <ResourceSelector selectorId="article-editor" ref="resourceSelectorRef" :on-selected="handleSelected"></ResourceSelector>
+
 </template>
 
 <script>
@@ -79,11 +76,13 @@ import QuillEditor from "./QuillEditor.vue";
 import {onMounted, reactive, ref, toRaw, toRefs} from "vue";
 import api from "../../api/index.js";
 import {useRoute} from "vue-router";
+import ResourceSelector from "./ResourceSelector.vue";
 
 
 export default {
   name: 'ArticleEditor',
   components: {
+    ResourceSelector,
     QuillEditor
   },
   setup() {
@@ -106,14 +105,6 @@ export default {
     const fileInput = ref(null);
 
     const editor = ref(null);
-
-    const handleThumbnailUpload = () => {
-      const file = fileInput.value.files[0];
-
-      api.uploadFile(file).then(response => {
-        articleVO.thumbnail = response.data;
-      })
-    };
 
     const saveContent = () => {
       const formData = new FormData();
@@ -170,15 +161,33 @@ export default {
       api.getAllCategoriesTree().then(response => {
         categories.value = response.data;
       })
-
     });
+
+    const resourceSelectorRef = ref();
+
+    const openResourceSelector = () => {
+      resourceSelectorRef.value.open();
+    }
+
+    const handleSelected = (value) => {
+      resourceSelectorRef.value.close();
+      articleVO.thumbnail = value;
+    }
+
+    const clearThumbnail = () => {
+      articleVO.thumbnail = "";
+    }
+
 
     return {
       categories,
       editor,
       articleVO,
       saveContent,
-      handleThumbnailUpload,
+      openResourceSelector,
+      handleSelected,
+      clearThumbnail,
+      resourceSelectorRef,
       fileInput
     }
   }
@@ -230,5 +239,6 @@ textarea {
   min-height: 100px;
   max-height: 100px;
 }
+
 
 </style>

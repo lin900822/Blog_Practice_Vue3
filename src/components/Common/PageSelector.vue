@@ -1,6 +1,7 @@
 <template>
   <div style="height: 100px; display: flex; justify-content: center; align-items: center;">
     <div>
+
       <button class="page-button" @click.prevent="changePage(pageInfo.prePage)">
         <i class="bi bi-chevron-left" style="font-size: 20px; text-align: center;"></i>
       </button>
@@ -24,27 +25,18 @@ import {onMounted} from "vue";
 export default {
   name: 'PageSelector',
   props: {
+    changePage:{
+      type: Function,
+      required: true
+    },
     pageInfo: {},
-    pageLink: ""
   },
   setup(props, ctx) {
     onMounted(() => {
 
     });
 
-    const changePage = (pageNum) => {
-      if (pageNum < 1 || pageNum > props.pageInfo.pages) return;
-
-      const params = new URLSearchParams(location.search);
-
-      if(params.has("category") )
-        location.href = props.pageLink + "?page=" + pageNum + "&category=" + params.get("category");
-      else
-        location.href = props.pageLink + "?page=" + pageNum;
-    };
-
     return {
-      changePage
     }
   }
 }

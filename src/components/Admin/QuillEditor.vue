@@ -1,37 +1,40 @@
 <template>
   <div ref="quillEditorElement" id="quillEditor"></div>
+  <ResourceSelector selectorId="quill-editor" ref="resourceSelectorRef" :on-selected="handleResourceSelected"></ResourceSelector>
 </template>
 
 <script>
-import {ref, onMounted, onUnmounted} from 'vue';
+import {onMounted, onUnmounted, ref} from 'vue';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
-import api from "../../api/index.js";
 import hljs from "highlight.js/lib/core";
+import ResourceSelector from "./ResourceSelector.vue";
 
 export default {
   name: 'QuillEditor',
+  components: {ResourceSelector},
   setup() {
     const quillEditorElement = ref(null);
+    const resourceSelectorRef = ref();
 
-    const handleImageUpload = (file) => {
-      return api.uploadFile(file).then(response => {
-        return response.data;
-      });
-    };
+    // const handleImageUpload = (file) => {
+    //   return api.uploadFile(file).then(response => {
+    //     return response.data;
+    //   });
+    // };
 
-    var ResizeImage = function(quill, options) {
+    var ResizeImage = function (quill, options) {
       this.quill = quill;
       this.options = options;
       this.initialize();
     };
 
-    ResizeImage.prototype.initialize = function() {
+    ResizeImage.prototype.initialize = function () {
       var self = this;
       this.imgs = [];
       this.deltaX = 0;
       this.deltaY = 0;
-      this.quill.root.addEventListener("mousedown", function(evt) {
+      this.quill.root.addEventListener("mousedown", function (evt) {
         if (evt.target && evt.target.tagName && evt.target.tagName.toUpperCase() === "IMG") {
           self.imgs.push(evt.target);
           self.deltaX = evt.clientX;
@@ -40,13 +43,13 @@ export default {
           evt.stopPropagation();
         }
       });
-      this.quill.root.addEventListener("mousemove", function(evt) {
+      this.quill.root.addEventListener("mousemove", function (evt) {
         if (self.imgs.length > 0) {
           var dX = evt.clientX - self.deltaX;
           var dY = evt.clientY - self.deltaY;
           self.deltaX = evt.clientX;
           self.deltaY = evt.clientY;
-          self.imgs.forEach(function(img) {
+          self.imgs.forEach(function (img) {
             img.style.width = img.clientWidth + dX + "px";
             img.style.height = "auto";
           });
@@ -54,10 +57,10 @@ export default {
           evt.stopPropagation();
         }
       });
-      this.quill.root.addEventListener("mouseup", function(evt) {
+      this.quill.root.addEventListener("mouseup", function (evt) {
         if (self.imgs.length > 0) {
           let editorWidth = self.quill.root.offsetWidth;
-          self.imgs.forEach(function(img) {
+          self.imgs.forEach(function (img) {
             let ratio = (img.clientWidth / editorWidth) * 100;
             img.style.width = ratio + "%";
             img.style.minWidth = "10%";
@@ -104,18 +107,19 @@ export default {
         });
 
         quillEditor.getModule('toolbar').addHandler('image', () => {
-          const input = document.createElement('input');
-          input.setAttribute('type', 'file');
-          input.setAttribute('accept', 'image/*');
-          input.click();
-
-          input.addEventListener('change', () => {
-            const file = input.files[0];
-            handleImageUpload(file).then((url) => {
-              const range = quillEditor.getSelection(true);
-              quillEditor.insertEmbed(range.index, 'image', url);
-            });
-          });
+          resourceSelectorRef.value.open();
+          // const input = document.createElement('input');
+          // input.setAttribute('type', 'file');
+          // input.setAttribute('accept', 'image/*');
+          // input.click();
+          //
+          // input.addEventListener('change', () => {
+          //   const file = input.files[0];
+          //   handleImageUpload(file).then((url) => {
+          //     const range = quillEditor.getSelection(true);
+          //     quillEditor.insertEmbed(range.index, 'image', url);
+          //   });
+          // });
         });
 
         quillEditor.on('editor-change', (eventName, delta, oldDelta) => {
@@ -144,10 +148,18 @@ export default {
       quillEditorElement.value.querySelector('.ql-editor').innerHTML = content;
     };
 
+    const handleResourceSelected = (value) => {
+      resourceSelectorRef.value.close();
+      const range = quillEditor.getSelection(true);
+      quillEditor.insertEmbed(range.index, 'image', value);
+    }
+
     return {
       quillEditorElement,
+      resourceSelectorRef,
       getContent,
-      setContent
+      setContent,
+      handleResourceSelected
     }
   }
 }

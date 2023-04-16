@@ -3,7 +3,7 @@
     <div>
       <ArticlePreview v-for="articleData in articleList" :article-data="articleData"></ArticlePreview>
     </div>
-    <PageSelector page-link="/articles" :page-info="pageInfo"></PageSelector>
+    <PageSelector :change-page="changePage" :page-info="pageInfo"></PageSelector>
   </div>
 </template>
 
@@ -54,12 +54,23 @@ export default {
         })
       }
 
-
     });
+
+    const changePage = (pageNum) => {
+      if (pageNum < 1 || pageNum > pageInfo.pages) return;
+
+      const params = new URLSearchParams(location.search);
+
+      if(params.has("category") )
+        location.href = "/articles?page=" + pageNum + "&category=" + params.get("category");
+      else
+        location.href = "/articles?page=" + pageNum;
+    };
 
     return {
       articleList,
-      pageInfo
+      pageInfo,
+      changePage
     }
   }
 }

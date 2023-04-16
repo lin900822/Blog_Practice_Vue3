@@ -25,7 +25,7 @@
               <button class="btn btn-secondary" @click="deleteResource(r.id)"><i class="bi bi-trash"></i></button>
             </div>
 
-            <PageSelector page-link="/admin/Resource" :page-info="pageInfo"></PageSelector>
+            <PageSelector :change-page="changePage" :page-info="pageInfo"></PageSelector>
           </div>
         </div>
       </div>
@@ -73,10 +73,22 @@ export default {
       }
     }
 
+    const changePage = (pageNum) => {
+      if (pageNum < 1 || pageNum > pageInfo.pages) return;
+
+      const params = new URLSearchParams(location.search);
+
+      if(params.has("category") )
+        location.href = "/admin/Resource?page=" + pageNum + "&category=" + params.get("category");
+      else
+        location.href = "/admin/Resource?page=" + pageNum;
+    };
+
     return {
       resourceList,
       pageInfo,
-      deleteResource
+      deleteResource,
+      changePage
     }
   }
 };
