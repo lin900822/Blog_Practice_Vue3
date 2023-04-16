@@ -19,12 +19,14 @@
             <tr>
               <th>ID</th>
               <th>文章標題</th>
+              <th>分類</th>
               <th>更新時間</th>
               <th>操作</th>
             </tr>
             <tr v-for="article in articleList">
               <td v-text="article.id" style="width: 50px;"></td>
               <td v-text="article.title" style="font-weight:bold; font-size: 18px;"></td>
+              <td v-text="article.category" style="width: 200px;"></td>
               <td v-text="article.updatedAt" style="width: 200px;"></td>
               <td style="width: 140px;">
                 <button class="btn btn-primary" style="margin-right: 5px;" @click="editArticle(article.id)">編輯
@@ -36,23 +38,7 @@
         </div>
 
         <!-- Page Selector -->
-        <div style="height: 100px; display: flex; justify-content: center; align-items: center;">
-          <div>
-            <button class="page-button" @click.prevent="changePage(pageInfo.prePage)">
-              <i class="bi bi-chevron-left" style="font-size: 20px; text-align: center;"></i>
-            </button>
-
-            <button class="page-button" @click.prevent="changePage(n)" v-for="n in pageInfo.navigatepageNums"
-                    :class="{ 'button-selected': n == pageInfo.pageNum }">
-              <span style="font-size: 20px; text-align: center;" v-text="n"></span>
-            </button>
-
-            <button class="page-button" @click.prevent="changePage(pageInfo.nextPage)">
-              <i class="bi bi-chevron-right" style="font-size: 20px; text-align: center;"></i>
-            </button>
-
-          </div>
-        </div>
+        <PageSelector page-link="/admin/ArticleList" :page-info="pageInfo"></PageSelector>
 
       </div>
     </div>
@@ -64,10 +50,11 @@ import $ from 'jquery'
 import AdminSideBar from "../../components/Admin/AdminSideBar.vue";
 import {onMounted, ref} from "vue";
 import api from "../../api/index.js";
+import PageSelector from "../../components/Common/PageSelector.vue";
 
 export default {
   name: 'AdminArticleList',
-  components: {AdminSideBar},
+  components: {PageSelector, AdminSideBar},
   setup() {
     const articleList = ref([]);
     const pageInfo = ref({});
@@ -80,6 +67,11 @@ export default {
       api.getAllArticles(pageNum).then(response => {
         articleList.value = response.data.list;
         pageInfo.value = response.data;
+
+        for (let i = 0; i < articleList.value.length; i++) {
+          if(articleList.value[i].category.length == 0)
+            articleList.value[i].category = "未分類";
+        }
       })
     });
 
@@ -95,18 +87,11 @@ export default {
       }
     };
 
-    const changePage = (pageNum) => {
-      if (pageNum < 1 || pageNum > pageInfo.value.pages) return;
-
-      location.href = "/admin/ArticleList?page=" + pageNum;
-    };
-
     return {
       articleList,
       pageInfo,
       editArticle,
-      deleteArticle,
-      changePage
+      deleteArticle
     }
   }
 }
@@ -175,17 +160,6 @@ th, td {
   text-align: left;
   padding: 8px;
   border: 1px solid #000;
-}
-
-.page-button {
-  background-color: #fff;
-  width: 35px;
-  height: 35px;
-  margin: 0 2px 0 2px;
-}
-
-.button-selected {
-  background-color: #999;
 }
 
 </style>

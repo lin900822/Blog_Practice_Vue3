@@ -31,10 +31,7 @@ export default {
     articleData: {}
   },
   setup(props,ctx) {
-    const articleData = reactive(props.articleData)
-    return {
-      articleData
-    }
+
   }
 };
 </script>

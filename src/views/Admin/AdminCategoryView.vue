@@ -26,8 +26,9 @@
                 <span v-for="n in c.level">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
                 <span v-text="c.name"></span>
               </td>
-              <td style="width: 125px">
+              <td style="width: 185px">
                 <button class="btn btn-primary" style="margin-right: 5px;" @click="openModal(c.id)">新增</button>
+                <button class="btn btn-success" style="margin-right: 5px;">修改</button>
                 <button class="btn btn-danger" @click="deleteCategory(c.id)">刪除</button>
               </td>
             </tr>
