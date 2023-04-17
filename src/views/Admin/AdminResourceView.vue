@@ -59,7 +59,11 @@ export default {
     if(pageNum == null) pageNum = 1;
 
     onMounted(() => {
-      api.getAllResources(pageNum).then(response => {
+      const resourceListWidth = document.getElementById("resource-list").offsetWidth;
+
+      const pageSize = Math.floor(resourceListWidth / 210) * 2;
+
+      api.getAllResources(pageNum, pageSize).then(response => {
         resourceList.value = response.data.list;
         pageInfo.value = response.data;
       })
@@ -76,12 +80,14 @@ export default {
     const changePage = (pageNum) => {
       if (pageNum < 1 || pageNum > pageInfo.pages) return;
 
-      const params = new URLSearchParams(location.search);
+      const resourceListWidth = document.getElementById("resource-list").offsetWidth;
 
-      if(params.has("category") )
-        location.href = "/admin/Resource?page=" + pageNum + "&category=" + params.get("category");
-      else
-        location.href = "/admin/Resource?page=" + pageNum;
+      const pageSize = Math.floor(resourceListWidth / 210) * 2;
+
+      api.getAllResources(pageNum, pageSize).then(response => {
+        resourceList.value = response.data.list;
+        pageInfo.value = response.data;
+      })
     };
 
     return {

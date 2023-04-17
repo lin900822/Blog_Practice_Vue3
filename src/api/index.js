@@ -57,8 +57,8 @@ export default {
         formData.append('multipartFile', file);
         return axios.post(path.baseUrl + path.uploadFile, formData);
     },
-    getAllResources(pageNum) {
-        return axios.get(path.baseUrl + path.getAllResources + "?pageNum=" + pageNum);
+    getAllResources(pageNum, pageSize) {
+        return axios.get(path.baseUrl + path.getAllResources + "?pageNum=" + pageNum + "&pageSize=" + pageSize);
     },
     deleteResource(id) {
         return axios.get(path.baseUrl + path.deleteResource + "/" + id);

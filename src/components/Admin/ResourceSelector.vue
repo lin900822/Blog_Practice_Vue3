@@ -53,7 +53,11 @@ export default {
       // 所以要讓每個ResourceSelector有獨立的ID，避免這個摁提
       document.getElementById(props.selectorId).style.display = "block";
 
-      api.getAllResources(1).then(response => {
+      const resourceListWidth = document.getElementById(props.selectorId).offsetWidth;
+      const pageSize = (Math.floor(resourceListWidth / 210) - 2) * 2;
+      document.getElementById(props.selectorId).children[0].style.width = (pageSize / 2 * 210) + 45 + "px";
+
+      api.getAllResources(1, pageSize).then(response => {
         resourceList.value = response.data.list;
         pageInfo.value = response.data;
       })
@@ -74,7 +78,11 @@ export default {
     const changePage = (pageNum) => {
       if (pageNum < 1 || pageNum > pageInfo.pages) return;
 
-      api.getAllResources(pageNum).then(response => {
+      const resourceListWidth = document.getElementById(props.selectorId).offsetWidth;
+      const pageSize = (Math.floor(resourceListWidth / 210) - 2) * 2;
+      document.getElementById(props.selectorId).children[0].style.width = (pageSize / 2 * 210) + 45 + "px";
+
+      api.getAllResources(pageNum, pageSize).then(response => {
         resourceList.value = response.data.list;
         pageInfo.value = response.data;
       })
@@ -122,7 +130,7 @@ export default {
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 75%;
+  width: 85%;
   height: 90%;
   position: absolute; /* 設置為絕對位置 */
   top: 50%;
@@ -151,6 +159,8 @@ export default {
 #resource-list {
   width: 100%;
   height: 100%;
+  max-height: 100%;
+  overflow: hidden;
 }
 
 .resource {

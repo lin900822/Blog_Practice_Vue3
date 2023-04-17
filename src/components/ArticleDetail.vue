@@ -75,6 +75,7 @@ export default {
   background-color: #fafafa;
   margin: 20px 0;
   padding: 20px 30px;
+  border-radius: 10px;
 }
 
 h1 {
