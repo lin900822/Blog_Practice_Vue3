@@ -32,6 +32,9 @@ export default {
     getAllArticles(pageNum) {
         return axios.get(path.baseUrl + path.getAllArticles + "?pageNum=" + pageNum);
     },
+    getAllPublicArticles(pageNum) {
+        return axios.get(path.baseUrl + path.getAllPublicArticles + "?pageNum=" + pageNum);
+    },
     getArticlesByCategories(category, pageNum) {
         return axios.get(path.baseUrl + path.getArticlesByCategories + "?category=" + category + "&pageNum=" + pageNum);
     },

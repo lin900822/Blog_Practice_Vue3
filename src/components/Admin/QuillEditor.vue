@@ -195,6 +195,11 @@ pre.ql-syntax {
   font-weight: bolder;
 }
 
+#quillEditor :deep(h3) {
+  font-size: 26px;
+  font-weight: bold;
+}
+
 #quillEditor :deep(li) {
   margin-top: 10px;
 }

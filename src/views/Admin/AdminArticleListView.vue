@@ -19,6 +19,7 @@
             <tr>
               <th>ID</th>
               <th>文章標題</th>
+              <th>狀態</th>
               <th>分類</th>
               <th>更新時間</th>
               <th>操作</th>
@@ -26,7 +27,11 @@
             <tr v-for="article in articleList">
               <td v-text="article.id" style="width: 50px;"></td>
               <td v-text="article.title" style="font-weight:bold; font-size: 18px;"></td>
-              <td v-text="article.category" style="width: 200px;"></td>
+              <td style="width: 50px; text-align: center">
+                <i v-show="article.status == 1" style="font-size: 20px; color: black" class="bi bi-eye"></i>
+                <i v-show="article.status == 0" style="font-size: 20px; color: #ccc" class="bi bi-eye-slash"></i>
+              </td>
+              <td v-text="article.category" style="width: 150px;"></td>
               <td v-text="article.updatedAt" style="width: 200px;"></td>
               <td style="width: 140px;">
                 <button class="btn btn-primary" style="margin-right: 5px;" @click="editArticle(article.id)">編輯

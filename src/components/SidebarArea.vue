@@ -74,6 +74,7 @@ export default {
 #category p {
   margin-bottom: 5px;
   cursor: pointer;
+  color: #6f6f6f;
 }
 
 #category p:hover {

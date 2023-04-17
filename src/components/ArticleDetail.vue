@@ -99,6 +99,11 @@ h1 {
   font-weight: bolder;
 }
 
+.content :deep(h3) {
+  font-size: 26px;
+  font-weight: bold;
+}
+
 .content :deep(li) {
   margin-top: 10px;
 }

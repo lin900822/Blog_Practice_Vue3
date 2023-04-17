@@ -42,7 +42,7 @@ export default {
         })
       }
       else{
-        api.getAllArticles(pageNum).then(response => {
+        api.getAllPublicArticles(pageNum).then(response => {
           articleList.value = response.data.list;
           pageInfo.value = response.data;
 
