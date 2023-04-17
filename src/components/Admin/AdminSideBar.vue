@@ -16,7 +16,7 @@
         </a>
         <ul class="collapse list-unstyled" id="settingsSubmenu">
           <li>
-            <a href="#">設定</a>
+            <a href="/admin/Basic">設定</a>
           </li>
         </ul>
 

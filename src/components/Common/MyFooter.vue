@@ -1,12 +1,28 @@
 <template>
   <div id="myfooter">
-    Copyright © 2023 Wilson Lin. All rights reserved.
+    Copyright © 2023 {{websiteName}}. All rights reserved.
   </div>
 </template>
 
 <script>
+import {onMounted, ref} from "vue";
+import api from "../../api/index.js";
+
 export default {
-  name: 'MyFooter'
+  name: 'MyFooter',
+  setup(){
+    const websiteName = ref();
+
+    onMounted(() => {
+      api.getBasic().then(response => {
+        websiteName.value = response.data.websiteName;
+      })
+    })
+
+    return{
+      websiteName
+    }
+  }
 }
 </script>
 

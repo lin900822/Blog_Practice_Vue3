@@ -62,5 +62,14 @@ export default {
     },
     deleteResource(id) {
         return axios.get(path.baseUrl + path.deleteResource + "/" + id);
+    },
+    getBasic() {
+        return axios.get(path.baseUrl + path.getBasic);
+    },
+    saveBasic(websiteName, websiteThumbnail) {
+        const formData = new FormData();
+        formData.append("websiteName", websiteName);
+        formData.append("websiteThumbnail", websiteThumbnail);
+        return axios.post(path.baseUrl + path.saveBasic, formData);
     }
 }

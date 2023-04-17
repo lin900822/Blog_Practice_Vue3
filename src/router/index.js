@@ -47,6 +47,12 @@ const routes = [
         meta: {requiresAuth: false}
     },
     {
+        path: '/admin/Basic',
+        name: 'AdminBasic',
+        component: () => import('../views/Admin/AdminBasicView.vue'),
+        meta: {requiresAuth: false}
+    },
+    {
         path: '/admin/ArticleEditor',
         name: 'ArticleEditorCreate',
         component: () => import('../views/Admin/ArticleEditorView.vue'),

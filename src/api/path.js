@@ -14,7 +14,9 @@ const base = {
     addCategory: "/category/add",
     deleteCategory: "/category/delete",
     getAllResources: "/resource/allResources",
-    deleteResource: "/resource/delete"
+    deleteResource: "/resource/delete",
+    getBasic: "/basic",
+    saveBasic: "/basic/save"
 }
 
 export default base;

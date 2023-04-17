@@ -1,18 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head id="userApp">
     <meta charset="UTF-8"/>
-    <link rel="icon" type="image/svg+xml" href="/vite.svg"/>
+    <link rel="icon" type="image/svg+xml" :href="websiteThumbnail"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Wilson Lin's Blog</title>
+    <title v-text="websiteName"></title>
     <style>
-        #app{
-            background-color: #f2f2f2;
-        }
+
     </style>
 </head>
 <body>
-<div id="app"></div>
+<div id="app" style="background-color: #f2f2f2;"></div>
 <script type="module" src="/src/main.js"></script>
+
+<!--此處使用vue2-->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="./node_modules/axios/dist/axios.min.js"></script>
+
+<script>
+    let userApp = new Vue({
+        el: "#userApp",
+        data: {
+            websiteName: "",
+            websiteThumbnail: ""
+        },
+        methods: {
+
+        },
+        created: function() {
+            axios.get("http://localhost:8080/basic").then(response => {
+                userApp.websiteName = response.data.websiteName;
+                userApp.websiteThumbnail = response.data.websiteThumbnail;
+            })
+        }
+    })
+</script>
 </body>
 </html>
