@@ -1,7 +1,7 @@
 <template>
   <div class="article-detail shadow">
     <div style="text-align:center;">
-      <img class="shadow" :src='articleContent.thumbnail' alt="" style="max-height: 720px; margin: 0 auto;"
+      <img class="shadow" :src='articleContent.thumbnail' alt="" style="max-height: 720px; max-width: 100%; margin: 0 auto;"
            v-show="articleContent.thumbnail != ''">
     </div>
 
@@ -102,6 +102,12 @@ h1 {
 .content :deep(h3) {
   font-size: 26px;
   font-weight: bold;
+}
+
+.content :deep(img) {
+  max-width: 100%;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  margin-right: 20px;
 }
 
 .content :deep(li) {

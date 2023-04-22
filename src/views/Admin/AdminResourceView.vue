@@ -17,8 +17,11 @@
 
           <div id="resource-list">
             <div class="resource shadow" v-for="r in resourceList">
-              <img class="shadow" :src="r.url"
-                   alt="">
+              <div>
+                <img class="shadow" :src="r.url"
+                     alt="">
+              </div>
+
               <p v-text="r.name"></p>
               <span v-text="r.fileSize"></span>
               <span v-text="r.createdAt"></span>
@@ -149,11 +152,17 @@ a:focus {
   margin: 5px;
 }
 
-.resource img {
-  display: block; /* 将 <img> 标签设置为块级元素 */
-  margin: 5px auto 0px auto; /* 将左右外边距设置为 auto，使其在父容器中水平居中 */
-  max-width: 100%;
+.resource > div {
   height: 80px;
+  margin: 5px auto 0px auto; /* 将左右外边距设置为 auto，使其在父容器中水平居中 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.resource img {
+  max-width: 100%;
+  max-height: 100%;
   border: 1px solid #3d3d3d;
 }
 

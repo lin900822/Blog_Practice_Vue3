@@ -1,5 +1,5 @@
 const base = {
-    baseUrl: "http://localhost:8080",
+    baseUrl: API_BASE_URL,
     login: "/auth/login",
     getUser: "/auth/user",
     register: "/auth/register",

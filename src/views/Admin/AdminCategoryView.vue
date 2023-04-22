@@ -203,7 +203,6 @@ td .btn {
   padding: 20px;
   border: 1px solid #888;
   width: 30%;
-  height: 30%;
   position: absolute; /* 設置為絕對位置 */
   top: 50%;
   left: 50%;

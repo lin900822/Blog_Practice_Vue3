@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <router-link class="nav-link active" aria-current="page" to="/">
-          <span id="logo-text">Wilson Lin's Blog</span>
+          <span id="logo-text" v-text="websiteName"></span>
         </router-link>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,6 +47,8 @@ import api from "../../api/index.js";
 export default {
   name: 'MyNavbar',
   setup() {
+    const websiteName = ref("");
+
     const state = reactive({
       categories: [
         {id: 0, name: "關於我", router: "/about"},
@@ -71,6 +73,10 @@ export default {
       }).catch(error => {
         console.log(error.response.data);
       });
+
+      api.getBasic().then(response => {
+        websiteName.value =response.data.websiteName;
+      })
     });
 
     const logout = () => {
@@ -81,6 +87,7 @@ export default {
     };
 
     return {
+      websiteName,
       state,
       isAuthenticated,
       nickname,

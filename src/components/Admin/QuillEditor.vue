@@ -200,6 +200,12 @@ pre.ql-syntax {
   font-weight: bold;
 }
 
+#quillEditor :deep(img) {
+  max-width: 100%;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  margin-right: 20px;
+}
+
 #quillEditor :deep(li) {
   margin-top: 10px;
 }

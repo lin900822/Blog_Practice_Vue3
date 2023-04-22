@@ -13,8 +13,8 @@
 
 <!--此處使用vue2-->
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="./node_modules/axios/dist/axios.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="/config.js"></script>
 <script>
     let userApp = new Vue({
         el: "#userApp",
@@ -26,7 +26,7 @@
 
         },
         created: function() {
-            axios.get("http://localhost:8080/basic").then(response => {
+            axios.get(API_BASE_URL + "/basic").then(response => {
                 userApp.websiteName = response.data.websiteName;
                 userApp.websiteThumbnail = response.data.websiteThumbnail;
             })
