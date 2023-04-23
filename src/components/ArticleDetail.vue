@@ -1,24 +1,37 @@
 <template>
   <div class="article-detail shadow">
     <div style="text-align:center;">
-      <img class="shadow" :src='articleContent.thumbnail' alt="" style="max-height: 720px; max-width: 100%; margin: 0 auto;"
-           v-show="articleContent.thumbnail != ''">
+      <img class="shadow" :src='articleVO.thumbnail' alt="" style="max-height: 720px; max-width: 100%; margin: 0 auto;"
+           v-show="articleVO.thumbnail != ''">
     </div>
 
-    <h1 v-text="articleContent.title"></h1>
+    <h1 v-text="articleVO.title"></h1>
     <p class="article-info">
       <i class="bi bi-clock"></i>
-      <span v-text="articleContent.createdAt"></span>
+      <span v-text="articleVO.createdAt"></span>
 
       <i class="bi bi-tags"></i>
-      <span v-text="articleContent.category"></span>
+      <span v-text="articleVO.category"></span>
     </p>
     <hr>
 
     <div class="content">
-      <div v-html="articleContent.content"></div>
+      <div v-html="articleVO.content"></div>
     </div>
+  </div>
 
+  <div id="comment" class="comment-area shadow">
+    <h2>討論</h2>
+    <div>
+      <div class="comment" v-for="c in comments">
+        <h2>{{c.nickname}} ：</h2>
+        <p v-text="c.content"></p>
+      </div>
+    </div>
+    <div>
+      <textarea class="form-control" v-model="comment" placeholder="說點什麼吧!" style="width: 100%; height: 80px; margin-bottom: 10px;"/>
+      <button class="btn btn-primary" @click="addComment">送出</button>
+    </div>
   </div>
 </template>
 
@@ -31,11 +44,11 @@ import hljs from "highlight.js/lib/core";
 export default {
   name: 'ArticleDetail',
   updated() {
-    const blocks = this.$el.querySelectorAll('.ql-syntax');
-    blocks.forEach((block) => {
-      // block.classList.add('language-java');
-      hljs.highlightElement(block);
-    });
+    // const blocks = this.$el.querySelectorAll('.ql-syntax');
+    // blocks.forEach((block) => {
+    //   // block.classList.add('language-java');
+    //   hljs.highlightElement(block);
+    // });
   },
   setup() {
     const articleVO = reactive({
@@ -45,6 +58,8 @@ export default {
       category: "",
       createdAt: ""
     });
+
+    const comments = ref();
 
     const route = useRoute();
 
@@ -60,10 +75,29 @@ export default {
       }).catch(() => {
         location.href = "/404";
       });
+
+      api.getCommentsByArticleId(articleId).then(response => {
+        comments.value = response.data;
+      })
     });
 
+    const comment = ref("");
+
+    const addComment = () => {
+      const articleId = route.params.articleId;
+      api.addComment(comment.value, articleId).then(response => {
+        comments.value.push(response.data);
+        comment.value = "";
+      }).catch(error => {
+        alert("請先登入!")
+      })
+    }
+
     return {
-      articleContent: articleVO
+      articleVO,
+      comment,
+      comments,
+      addComment
     }
   }
 }
@@ -73,7 +107,7 @@ export default {
 .article-detail {
   min-height: 1000px;
   background-color: #fafafa;
-  margin: 20px 0;
+  margin: 20px 0 50px 0;
   padding: 20px 30px;
   border-radius: 10px;
 }
@@ -129,6 +163,42 @@ h1 {
 
 .article-info * {
   margin: auto 5px;
+}
+
+/**/
+
+.comment-area{
+  min-height: 100px;
+  background-color: #fafafa;
+  margin: 0px 0 50px 0;
+  padding: 20px 30px;
+  border-radius: 10px;
+}
+
+.comment-area h2 {
+  font-weight: bold;
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.comment {
+  min-height: 100px;
+  border: 1px solid #cccccc;
+  border-radius: 10px;
+  margin: 10px 0;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.comment h2 {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.comment p {
+  margin-left: 15px;
+  width: 100%;
+  word-wrap: break-word;
 }
 
 </style>

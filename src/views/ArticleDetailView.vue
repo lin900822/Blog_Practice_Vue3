@@ -4,12 +4,12 @@
     <div>
       <div class="container">
         <div class="row">
-          <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9">
 
             <ArticleDetail></ArticleDetail>
 
           </div>
-          <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
             <SidebarArea></SidebarArea>
           </div>
         </div>

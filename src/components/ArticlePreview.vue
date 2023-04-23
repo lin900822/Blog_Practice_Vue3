@@ -53,7 +53,7 @@ export default {
   margin-bottom: 10px;
 }
 
-.thumbnail > img {
+.thumbnail img {
   border-radius: 5px;
   max-height: 100%;
   max-width: 100%;

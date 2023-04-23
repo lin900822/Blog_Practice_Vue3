@@ -17,7 +17,9 @@ const base = {
     getAllResources: "/resource/allResources",
     deleteResource: "/resource/delete",
     getBasic: "/basic",
-    saveBasic: "/basic/save"
+    saveBasic: "/basic/save",
+    addComment: "/comment/add",
+    getCommentsByArticleId: "/comment/getCommentsByArticleId"
 }
 
 export default base;

@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <router-link class="nav-link active" aria-current="page" to="/">
-          <span id="logo-text" v-text="websiteName"></span>
+          <span id="logo-text" style="margin: 10px;" v-text="websiteName"></span>
         </router-link>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,10 +11,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
+            <li class="nav-item" style="margin: 10px;">
               <a href="" @click.prevent="loadPage('/')">首頁</a>
             </li>
-            <li class="nav-item" v-for="category in state.categories">
+            <li class="nav-item" style="margin: 10px;" v-for="category in state.categories">
               <a href="" @click.prevent="loadPage(category.router)" v-text="category.name"></a>
             </li>
           </ul>
@@ -51,9 +51,8 @@ export default {
 
     const state = reactive({
       categories: [
-        {id: 0, name: "關於我", router: "/about"},
-        {id: 1, name: "作品集", router: "/portfolio"},
-        {id: 2, name: "學習筆記", router: "/articles"}
+        {id: 0, name: "作品集", router: "/articles"},
+        {id: 1, name: "文章", router: "/articles"}
       ]
     });
 

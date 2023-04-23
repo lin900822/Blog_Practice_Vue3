@@ -3,7 +3,8 @@
     <div class="shadow content-item">
       <h2>關於</h2>
       <img :src="websiteThumbnail" alt="">
-      <p>這是一個簡單的內容管理系統</p>
+      <p>歡迎來到Wilson Lin's Blog</p>
+      <p>這是一個簡單的個人部落格，用來記錄我的學習歷程</p>
       <p>前端使用Vue3 + BootStrap + Axios</p>
       <p>後端使用Spring Boot + MySQL</p>
     </div>

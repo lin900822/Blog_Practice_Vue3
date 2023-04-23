@@ -74,5 +74,16 @@ export default {
         formData.append("websiteName", websiteName);
         formData.append("websiteThumbnail", websiteThumbnail);
         return axios.post(path.baseUrl + path.saveBasic, formData);
+    },
+    addComment(comment, articleId) {
+        const token = localStorage.getItem("token");
+        const formData = new FormData();
+        formData.append("token", token);
+        formData.append("comment", comment);
+        formData.append("articleId", articleId);
+        return axios.post(path.baseUrl + path.addComment, formData);
+    },
+    getCommentsByArticleId(articleId) {
+        return axios.get(path.baseUrl + path.getCommentsByArticleId + "?articleId=" + articleId);
     }
 }
