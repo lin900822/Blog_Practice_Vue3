@@ -5,7 +5,7 @@
         <h1>註冊</h1>
         <input class="form-control margin-ver-15" type="text" name="username" placeholder="請輸入使用者名稱"
                aria-label="default input example">
-        <input class="form-control margin-ver-15" type="email" name="email" placeholder="請輸入電子郵件信箱"
+        <input class="form-control margin-ver-15" type="email" name="email" placeholder="請輸入有效的電子郵件信箱"
                aria-label="default input example">
         <input class="form-control margin-ver-15" type="text" name="nickname" placeholder="請輸入暱稱"
                aria-label="default input example">

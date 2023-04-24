@@ -44,7 +44,9 @@ export default {
         let token= localStorage.getItem("token");
         const formData = new FormData();
         formData.append("token", token);
-        return axios.post(path.baseUrl + path.deleteArticle + "/" + id, formData);
+        formData.append("id", id);
+
+        return axios.post(path.baseUrl + path.deleteArticle, formData);
     },
     getAllCategoriesTree() {
         return axios.get(path.baseUrl + path.getAllCategoriesTree);
@@ -59,11 +61,21 @@ export default {
 
         return axios.post(path.baseUrl + path.addCategory, formData);
     },
+    updateCategory(name, categoryId) {
+        let token= localStorage.getItem("token");
+        const formData = new FormData();
+        formData.append("name", name);
+        formData.append("token", token);
+        formData.append("id", categoryId);
+
+        return axios.post(path.baseUrl + path.updateCategory, formData);
+    },
     deleteCategory(id) {
         let token= localStorage.getItem("token");
         const formData = new FormData();
         formData.append("token", token);
-        return axios.post(path.baseUrl + path.deleteCategory + "/" + id, formData);
+        formData.append("id", id);
+        return axios.post(path.baseUrl + path.deleteCategory, formData);
     },
     uploadFile(file) {
         let token= localStorage.getItem("token");
@@ -82,7 +94,8 @@ export default {
         let token= localStorage.getItem("token");
         const formData = new FormData();
         formData.append("token", token);
-        return axios.post(path.baseUrl + path.deleteResource + "/" + id, formData);
+        formData.append("id", id);
+        return axios.post(path.baseUrl + path.deleteResource, formData);
     },
     getBasic() {
         return axios.get(path.baseUrl + path.getBasic);
@@ -105,5 +118,20 @@ export default {
     },
     getCommentsByArticleId(articleId) {
         return axios.get(path.baseUrl + path.getCommentsByArticleId + "?articleId=" + articleId);
+    },
+    updateComment(commentId, content){
+        let token= localStorage.getItem("token");
+        const formData = new FormData();
+        formData.append("token", token);
+        formData.append("content", content);
+        formData.append("id", commentId);
+        return axios.post(path.baseUrl + path.updateComment, formData);
+    },
+    deleteComment(commentId){
+        let token= localStorage.getItem("token");
+        const formData = new FormData();
+        formData.append("token", token);
+        formData.append("id", commentId);
+        return axios.post(path.baseUrl + path.deleteComment, formData);
     }
 }

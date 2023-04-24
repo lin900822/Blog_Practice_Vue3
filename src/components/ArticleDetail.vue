@@ -24,12 +24,22 @@
     <h2>討論</h2>
     <div>
       <div class="comment" v-for="c in comments">
-        <h2>{{c.nickname}} ：</h2>
-        <p v-text="c.content"></p>
+        <h2>{{ c.nickname }} ：</h2>
+        <div class="operation" v-show="userId == c.userId">
+          <button class="btn btn-secondary" @click="editBtnClicked(c.id)"><i class="bi bi-pencil"></i></button>
+          <button class="btn btn-danger" @click="deleteBtnClicked(c.id)"><i class="bi bi-trash"></i></button>
+        </div>
+        <p v-show="editingId != c.id" v-text="c.content"></p>
+        <div v-show="editingId == c.id">
+          <textarea class="form-control" v-model="editedComment" :placeholder="c.content"
+                    style="width: 100%; max-height: 80px; min-height: 80px; margin-bottom: 10px;"/>
+          <button class="btn btn-success" @click="updateComment(c.id)">修改</button>
+        </div>
       </div>
     </div>
     <div>
-      <textarea class="form-control" v-model="comment" placeholder="說點什麼吧!" style="width: 100%; height: 80px; margin-bottom: 10px;"/>
+      <textarea class="form-control" v-model="comment" placeholder="說點什麼吧!"
+                style="width: 100%; max-height: 80px; min-height: 80px; margin-bottom: 10px;"/>
       <button class="btn btn-primary" @click="addComment">送出</button>
     </div>
   </div>
@@ -61,6 +71,8 @@ export default {
 
     const comments = ref();
 
+    const userId = ref("");
+
     const route = useRoute();
 
     onMounted(() => {
@@ -71,6 +83,9 @@ export default {
         articleVO.thumbnail = response.data.thumbnail;
         articleVO.content = response.data.content;
         articleVO.category = response.data.category;
+        if(articleVO.category.length == 0){
+          articleVO.category="未分類";
+        }
         articleVO.createdAt = response.data.createdAt;
       }).catch(() => {
         location.href = "/404";
@@ -78,6 +93,10 @@ export default {
 
       api.getCommentsByArticleId(articleId).then(response => {
         comments.value = response.data;
+      })
+
+      api.getUser().then(response => {
+        userId.value = response.data.id;
       })
     });
 
@@ -93,11 +112,49 @@ export default {
       })
     }
 
+    const editedComment = ref("");
+    const editingId = ref(0);
+
+    const updateComment = (id) => {
+      api.updateComment(id, editedComment.value).then(response => {
+        editingId.value = 0;
+        for (let i = 0; i < comments.value.length; i++) {
+          if (comments.value[i].id == id) {
+            comments.value[i].content = editedComment.value;
+            break;
+          }
+        }
+      })
+    }
+
+    const editBtnClicked = (id) => {
+      editingId.value = id;
+    }
+
+    const deleteBtnClicked = (id) => {
+      if (confirm("您確定要刪除這則評論嗎?")) {
+        api.deleteComment(id).then(response => {
+          for (let i = 0; i < comments.value.length; i++) {
+            if (comments.value[i].id == id) {
+              comments.value.splice(i, 1);
+              break;
+            }
+          }
+        })
+      }
+    }
+
     return {
       articleVO,
       comment,
       comments,
-      addComment
+      editingId,
+      userId,
+      editedComment,
+      updateComment,
+      addComment,
+      editBtnClicked,
+      deleteBtnClicked
     }
   }
 }
@@ -167,7 +224,7 @@ h1 {
 
 /**/
 
-.comment-area{
+.comment-area {
   min-height: 100px;
   background-color: #fafafa;
   margin: 0px 0 50px 0;
@@ -191,8 +248,26 @@ h1 {
 }
 
 .comment h2 {
+  display: inline-block;
   font-weight: bold;
   font-size: 20px;
+}
+
+.operation {
+  display: inline-block;
+  float: right;
+}
+
+.operation > button {
+  width: 30px;
+  height: 25px;
+  padding: 0;
+  margin-bottom: 5px;
+  margin-right: 5px;
+}
+
+.comment button i {
+  font-size: 12px;
 }
 
 .comment p {

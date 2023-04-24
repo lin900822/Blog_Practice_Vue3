@@ -9,9 +9,9 @@
                aria-label="default input example" v-model="password">
         <div class="form-check margin-ver-15">
           <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-          <label class="form-check-label" for="flexCheckDefault">
-            記住我
-          </label>
+<!--          <label class="form-check-label" for="flexCheckDefault">-->
+<!--            記住我-->
+<!--          </label>-->
         </div>
 
         <p v-text="errorMessage" style="color: red; text-align: center; margin-top: 15px"></p>

@@ -13,13 +13,16 @@ const base = {
     deleteArticle: "/article/delete",
     getAllCategoriesTree: "/category/getAllCategoriesTree",
     addCategory: "/category/add",
+    updateCategory: "/category/update",
     deleteCategory: "/category/delete",
     getAllResources: "/resource/allResources",
     deleteResource: "/resource/delete",
     getBasic: "/basic",
     saveBasic: "/basic/save",
     addComment: "/comment/add",
-    getCommentsByArticleId: "/comment/getCommentsByArticleId"
+    getCommentsByArticleId: "/comment/getCommentsByArticleId",
+    updateComment: "/comment/update",
+    deleteComment: "/comment/delete"
 }
 
 export default base;

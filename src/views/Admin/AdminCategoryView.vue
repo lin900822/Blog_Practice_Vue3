@@ -14,7 +14,7 @@
 
         <div style="padding: 10px;">
           <span style="font-weight:bold; font-size: 40px;">分類列表</span>
-          <button class="btn btn-primary" style="float: right;" @click="openModal(null)">新增</button>
+          <button class="btn btn-primary" style="float: right;" @click="openAddCategoryWindow(null)">新增</button>
 
           <table border="1px">
             <tr>
@@ -27,9 +27,9 @@
                 <span v-text="c.name"></span>
               </td>
               <td style="width: 185px">
-                <button class="btn btn-primary" style="margin-right: 5px;" @click="openModal(c.id)">新增</button>
-                <button class="btn btn-success" style="margin-right: 5px;">修改</button>
-                <button class="btn btn-danger" @click="deleteCategory(c.id)">刪除</button>
+                <button class="btn btn-primary" style="margin-right: 5px;" @click="openAddCategoryWindow(c.id)">新增</button>
+                <button class="btn btn-success" style="margin-right: 5px;" @click="openUpdateCategoryWindow(c.id)">修改</button>
+                <button class="btn btn-danger" @click="deleteCategory(c.id, c.name)">刪除</button>
               </td>
             </tr>
           </table>
@@ -39,9 +39,9 @@
     </div>
   </div>
 
-  <div id="myModal" class="modal">
+  <div id="add-category-window" class="modal">
     <div class="modal-content">
-      <span class="close" @click="closeModal()">&times;</span>
+      <span class="close" @click="closeAddCategoryWindow()">&times;</span>
       <h1 style="font-weight:bold; font-size: 32px; margin-top: 0px;">新增分類</h1>
       <form action="" style="margin-top: 20px;">
         <label class="form-label" for="">分類名稱</label>
@@ -50,7 +50,24 @@
       <div style="margin-top: 30px;">
         <div style="float: right">
           <button class="btn btn-primary" style="margin-right: 5px;" @click="addCategory()">新增</button>
-          <button class="btn btn-secondary" @click="closeModal">取消</button>
+          <button class="btn btn-secondary" @click="closeAddCategoryWindow">取消</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="update-category-window" class="modal">
+    <div class="modal-content">
+      <span class="close" @click="closeUpdateCategoryWindow()">&times;</span>
+      <h1 style="font-weight:bold; font-size: 32px; margin-top: 0px;">修改分類</h1>
+      <form action="" style="margin-top: 20px;">
+        <label class="form-label" for="">分類名稱</label>
+        <input class="form-control" type="text" placeholder="新名稱" v-model="name">
+      </form>
+      <div style="margin-top: 30px;">
+        <div style="float: right">
+          <button class="btn btn-primary" style="margin-right: 5px;" @click="updateCategory()">修改</button>
+          <button class="btn btn-secondary" @click="closeUpdateCategoryWindow">取消</button>
         </div>
       </div>
     </div>
@@ -77,6 +94,7 @@ export default {
   setup() {
     const name = ref("");
     const ancestorId = ref(0);
+    const updateId = ref(0);
 
     const categoryList = ref([]);
 
@@ -86,14 +104,24 @@ export default {
       })
     });
 
-    const openModal = (id) => {
-      document.getElementById("myModal").style.display = "block";
+    const openAddCategoryWindow = (id) => {
+      document.getElementById("add-category-window").style.display = "block";
       ancestorId.value = id;
       name.value = "";
     }
 
-    const closeModal = () => {
-      document.getElementById("myModal").style.display = "none";
+    const closeAddCategoryWindow = () => {
+      document.getElementById("add-category-window").style.display = "none";
+    }
+
+    const openUpdateCategoryWindow = (id) => {
+      document.getElementById("update-category-window").style.display = "block";
+      updateId.value = id;
+      name.value = "";
+    }
+
+    const closeUpdateCategoryWindow = () => {
+      document.getElementById("update-category-window").style.display = "none";
     }
 
     const addCategory = () => {
@@ -102,8 +130,14 @@ export default {
       })
     }
 
-    const deleteCategory = (id) => {
-      if(confirm("確定要刪除嗎?")){
+    const updateCategory = () => {
+      api.updateCategory(name.value, updateId.value).then(repsonse => {
+        location.reload();
+      })
+    }
+
+    const deleteCategory = (id, name) => {
+      if(confirm("確定要刪除分類: " + name + " 嗎?")){
         api.deleteCategory(id).then(() => {
           location.reload();
         })
@@ -112,12 +146,16 @@ export default {
 
     return {
       categoryList,
-      openModal,
-      closeModal,
+      openAddCategoryWindow,
+      closeAddCategoryWindow,
+      openUpdateCategoryWindow,
+      closeUpdateCategoryWindow,
       addCategory,
+      updateCategory,
       deleteCategory,
       name,
-      ancestorId
+      ancestorId,
+      updateId
     }
   }
 };
