@@ -12,10 +12,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item" style="margin: 10px;">
-              <a href="" @click.prevent="loadPage('/')">首頁</a>
+              <a href="" @click.prevent="loadPage('/')" style="display: block; width: inherit;">首頁</a>
             </li>
             <li class="nav-item" style="margin: 10px;" v-for="category in state.categories">
-              <a href="" @click.prevent="loadPage(category.router)" v-text="category.name"></a>
+              <a href="" @click.prevent="loadPage(category.router)" v-text="category.name" style="display: block; width: inherit;"></a>
             </li>
           </ul>
 
@@ -64,6 +64,10 @@ export default {
     }
 
     onMounted(() => {
+      api.getBasic().then(response => {
+        websiteName.value = response.data.websiteName;
+      })
+
       if (!localStorage.getItem("token")) return;
 
       api.getUser().then(response => {
@@ -72,10 +76,6 @@ export default {
       }).catch(error => {
         console.log(error.response.data);
       });
-
-      api.getBasic().then(response => {
-        websiteName.value =response.data.websiteName;
-      })
     });
 
     const logout = () => {

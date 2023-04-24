@@ -9,7 +9,7 @@ export default {
         return axios.post(path.baseUrl + path.login, formData);
     },
     getUser() {
-        const token = localStorage.getItem("token");
+        let token= localStorage.getItem("token");
         const formData = new FormData();
         formData.append("token", token);
         return axios.post(path.baseUrl + path.getUser, formData);
@@ -18,12 +18,14 @@ export default {
         return axios.post(path.baseUrl + path.register, formData);
     },
     isAdmin() {
-        const token = localStorage.getItem("token");
+        let token= localStorage.getItem("token");
         const formData = new FormData();
         formData.append("token", token);
         return axios.post(path.baseUrl + path.isAdmin, formData);
     },
     saveArticle(formData) {
+        let token= localStorage.getItem("token");
+        formData.append("token", token);
         return axios.post(path.baseUrl + path.saveArticle, formData);
     },
     getArticleDetail(id) {
@@ -39,44 +41,62 @@ export default {
         return axios.get(path.baseUrl + path.getArticlesByCategories + "?category=" + category + "&pageNum=" + pageNum);
     },
     deleteArticle(id) {
-        return axios.get(path.baseUrl + path.deleteArticle + "/" + id);
+        let token= localStorage.getItem("token");
+        const formData = new FormData();
+        formData.append("token", token);
+        return axios.post(path.baseUrl + path.deleteArticle + "/" + id, formData);
     },
     getAllCategoriesTree() {
         return axios.get(path.baseUrl + path.getAllCategoriesTree);
     },
     addCategory(name, ancestorId) {
+        let token= localStorage.getItem("token");
         const formData = new FormData();
         formData.append("name", name);
+        formData.append("token", token);
         if (ancestorId != null)
             formData.append("ancestorId", ancestorId);
 
         return axios.post(path.baseUrl + path.addCategory, formData);
     },
     deleteCategory(id) {
-        return axios.get(path.baseUrl + path.deleteCategory + "/" + id);
+        let token= localStorage.getItem("token");
+        const formData = new FormData();
+        formData.append("token", token);
+        return axios.post(path.baseUrl + path.deleteCategory + "/" + id, formData);
     },
     uploadFile(file) {
+        let token= localStorage.getItem("token");
         const formData = new FormData();
+        formData.append("token", token);
         formData.append('multipartFile', file);
         return axios.post(path.baseUrl + path.uploadFile, formData);
     },
     getAllResources(pageNum, pageSize) {
-        return axios.get(path.baseUrl + path.getAllResources + "?pageNum=" + pageNum + "&pageSize=" + pageSize);
+        let token= localStorage.getItem("token");
+        const formData = new FormData();
+        formData.append("token", token);
+        return axios.post(path.baseUrl + path.getAllResources + "?pageNum=" + pageNum + "&pageSize=" + pageSize, formData);
     },
     deleteResource(id) {
-        return axios.get(path.baseUrl + path.deleteResource + "/" + id);
+        let token= localStorage.getItem("token");
+        const formData = new FormData();
+        formData.append("token", token);
+        return axios.post(path.baseUrl + path.deleteResource + "/" + id, formData);
     },
     getBasic() {
         return axios.get(path.baseUrl + path.getBasic);
     },
     saveBasic(websiteName, websiteThumbnail) {
+        let token= localStorage.getItem("token");
         const formData = new FormData();
+        formData.append("token", token);
         formData.append("websiteName", websiteName);
         formData.append("websiteThumbnail", websiteThumbnail);
         return axios.post(path.baseUrl + path.saveBasic, formData);
     },
     addComment(comment, articleId) {
-        const token = localStorage.getItem("token");
+        let token= localStorage.getItem("token");
         const formData = new FormData();
         formData.append("token", token);
         formData.append("comment", comment);

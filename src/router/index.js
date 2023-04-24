@@ -44,43 +44,43 @@ const routes = [
         path: '/admin',
         name: 'admin',
         component: () => import('../views/Admin/AdminView.vue'),
-        meta: {requiresAuth: false}
+        meta: {requiresAuth: true}
     },
     {
         path: '/admin/Basic',
         name: 'AdminBasic',
         component: () => import('../views/Admin/AdminBasicView.vue'),
-        meta: {requiresAuth: false}
+        meta: {requiresAuth: true}
     },
     {
         path: '/admin/ArticleEditor',
         name: 'ArticleEditorCreate',
         component: () => import('../views/Admin/ArticleEditorView.vue'),
-        meta: {requiresAuth: false}
+        meta: {requiresAuth: true}
     },
     {
         path: '/admin/ArticleEditor/:articleId',
         name: 'ArticleEditorUpdate',
         component: () => import('../views/Admin/ArticleEditorView.vue'),
-        meta: {requiresAuth: false}
+        meta: {requiresAuth: true}
     },
     {
         path: '/admin/ArticleList',
         name: 'AdminArticleListView',
         component: () => import('../views/Admin/AdminArticleListView.vue'),
-        meta: {requiresAuth: false}
+        meta: {requiresAuth: true}
     },
     {
         path: '/admin/Category',
         name: 'AdminCategoryView',
         component: () => import('../views/Admin/AdminCategoryView.vue'),
-        meta: {requiresAuth: false}
+        meta: {requiresAuth: true}
     },
     {
         path: '/admin/Resource',
         name: 'AdminResourceView',
         component: () => import('../views/Admin/AdminResourceView.vue'),
-        meta: {requiresAuth: false}
+        meta: {requiresAuth: true}
     },
     {
         path: '/:pathMatch(.*)',
