@@ -49,6 +49,7 @@ export default {
 }
 
 .page-button {
+  border: 1px solid #3d3d3d;
   background-color: #fff;
   width: 35px;
   height: 35px;
@@ -56,6 +57,10 @@ export default {
   display: flex;
   align-content: center;
   justify-content: center;
+}
+
+.page-button * {
+  color: #3d3d3d;
 }
 
 .button-selected {

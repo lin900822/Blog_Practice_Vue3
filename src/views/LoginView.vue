@@ -7,12 +7,12 @@
                aria-label="default input example" v-model="username">
         <input class="form-control margin-ver-15" type="password" name="password" placeholder="請輸入密碼"
                aria-label="default input example" v-model="password">
-        <div class="form-check margin-ver-15">
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+<!--        <div class="form-check margin-ver-15">-->
+<!--          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">-->
 <!--          <label class="form-check-label" for="flexCheckDefault">-->
 <!--            記住我-->
 <!--          </label>-->
-        </div>
+<!--        </div>-->
 
         <p v-text="errorMessage" style="color: red; text-align: center; margin-top: 15px"></p>
         <button type="button" class="btn btn-primary" @click.prevent="login()">登入</button>

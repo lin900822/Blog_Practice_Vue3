@@ -25,6 +25,7 @@
     <div>
       <div class="comment" v-for="c in comments">
         <h2>{{ c.nickname }} ：</h2>
+        <span>發表於{{c.createdAt}}</span>
         <div class="operation" v-show="userId == c.userId">
           <button class="btn btn-secondary" @click="editBtnClicked(c.id)"><i class="bi bi-pencil"></i></button>
           <button class="btn btn-danger" @click="deleteBtnClicked(c.id)"><i class="bi bi-trash"></i></button>
@@ -50,6 +51,7 @@ import {ref, reactive, onMounted, onUpdated} from "vue";
 import api from "../api/index.js";
 import {useRoute} from 'vue-router'
 import hljs from "highlight.js/lib/core";
+import formatDate from "../utils/dateFormatter.js";
 
 export default {
   name: 'ArticleDetail',
@@ -86,13 +88,17 @@ export default {
         if(articleVO.category.length == 0){
           articleVO.category="未分類";
         }
-        articleVO.createdAt = response.data.createdAt;
+        articleVO.createdAt = formatDate(response.data.createdAt);
       }).catch(() => {
         location.href = "/404";
       });
 
       api.getCommentsByArticleId(articleId).then(response => {
         comments.value = response.data;
+
+        for (let i = 0; i < comments.value.length; i++) {
+          comments.value[i].createdAt = formatDate(comments.value[i].createdAt);
+        }
       })
 
       api.getUser().then(response => {
@@ -105,7 +111,9 @@ export default {
     const addComment = () => {
       const articleId = route.params.articleId;
       api.addComment(comment.value, articleId).then(response => {
-        comments.value.push(response.data);
+        let data = response.data;
+        data.createdAt = formatDate(data.createdAt);
+        comments.value.push(data);
         comment.value = "";
       }).catch(error => {
         alert("請先登入!")
@@ -245,6 +253,15 @@ h1 {
   margin: 10px 0;
   padding: 20px;
   background-color: #fff;
+  position: relative;
+}
+
+.comment span {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  font-size: 12px;
+  color: #9f9f9f;
 }
 
 .comment h2 {

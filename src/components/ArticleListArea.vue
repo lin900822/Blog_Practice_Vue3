@@ -12,6 +12,8 @@ import {onMounted, ref} from "vue"
 import ArticlePreview from "./ArticlePreview.vue";
 import api from "../api/index.js";
 import PageSelector from "./Common/PageSelector.vue";
+import formatDate from "../utils/dateFormatter.js";
+
 
 export default {
   name: 'ArticleArea',
@@ -38,6 +40,8 @@ export default {
             if(articleList.value[i].category.length == 0){
               articleList.value[i].category="未分類";
             }
+
+            articleList.value[i].updatedAt = formatDate(articleList.value[i].updatedAt);
           }
         })
       }
@@ -50,6 +54,8 @@ export default {
             if(articleList.value[i].category.length == 0){
               articleList.value[i].category="未分類";
             }
+
+            articleList.value[i].updatedAt = formatDate(articleList.value[i].updatedAt);
           }
         })
       }

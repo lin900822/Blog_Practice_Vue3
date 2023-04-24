@@ -56,6 +56,7 @@ import AdminSideBar from "../../components/Admin/AdminSideBar.vue";
 import {onMounted, ref} from "vue";
 import api from "../../api/index.js";
 import PageSelector from "../../components/Common/PageSelector.vue";
+import formatDate from "../../utils/dateFormatter.js";
 
 export default {
   name: 'AdminArticleList',
@@ -79,6 +80,8 @@ export default {
         for (let i = 0; i < articleList.value.length; i++) {
           if(articleList.value[i].category.length == 0)
             articleList.value[i].category = "未分類";
+
+          articleList.value[i].updatedAt = formatDate(articleList.value[i].updatedAt);
         }
       })
     });
