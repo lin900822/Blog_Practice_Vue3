@@ -53,10 +53,11 @@
 <script>
 import $ from 'jquery'
 import AdminSideBar from "../../components/Admin/AdminSideBar.vue";
-import {onMounted, ref} from "vue";
+import {inject, onMounted, ref} from "vue";
 import api from "../../api/index.js";
 import PageSelector from "../../components/Common/PageSelector.vue";
 import formatDate from "../../utils/dateFormatter.js";
+import router from "../../router/index.js";
 
 export default {
   name: 'AdminArticleList',
@@ -65,11 +66,11 @@ export default {
     const articleList = ref([]);
     const pageInfo = ref({});
 
-    onMounted(() => {
+    function loadArticles() {
       const params = new URLSearchParams(location.search);
 
       let pageNum = params.get("page");
-      if(pageNum == null) pageNum = 1;
+      if (pageNum == null) pageNum = 1;
 
       articleList.value = [];
       pageInfo.value = {};
@@ -78,22 +79,29 @@ export default {
         pageInfo.value = response.data;
 
         for (let i = 0; i < articleList.value.length; i++) {
-          if(articleList.value[i].category.length == 0)
+          if (articleList.value[i].category.length == 0)
             articleList.value[i].category = "未分類";
 
           articleList.value[i].updatedAt = formatDate(articleList.value[i].updatedAt);
         }
       })
+    }
+
+    onMounted(() => {
+      loadArticles();
+      window.addEventListener('onRouted', loadArticles);
     });
 
     const editArticle = (id) => {
       location.href = "/admin/ArticleEditor/" + id;
     };
 
+    const reload = inject("reload");
+
     const deleteArticle = (id) => {
       if (confirm("確定要刪除ID " + id + "的文章?")) {
         api.deleteArticle(id).then(response => {
-          location.reload();
+          reload();
         });
       }
     };
@@ -101,12 +109,7 @@ export default {
     const changePage = (pageNum) => {
       if (pageNum < 1 || pageNum > pageInfo.pages) return;
 
-      const params = new URLSearchParams(location.search);
-
-      if(params.has("category") )
-        location.href = "/admin/ArticleList?page=" + pageNum + "&category=" + params.get("category");
-      else
-        location.href = "/admin/ArticleList?page=" + pageNum;
+      router.push("/admin/ArticleList?page=" + pageNum);
     };
 
     return {

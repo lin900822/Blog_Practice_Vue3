@@ -40,13 +40,13 @@
                 <h2>技能</h2>
                 <ui>
                   <li>
-                    <b>前端</b>：熟悉HTML CSS JS語法，以及 jQuery, Bootstrap, Vue, Axios等框架的基本使用
+                    <b>前端</b>：了解HTML CSS JS語法，以及 jQuery, Bootstrap, Vue, Axios等框架的基本使用
                   </li>
                   <li>
                     <b>後端</b>：熟悉Java語法, 及Spring Boot, Mybatis等常用框架
                   </li>
                   <li>
-                    <b>資料庫</b>：熟悉MySQL常用增刪改查語句
+                    <b>資料庫</b>：熟悉MySQL常用語句
                   </li>
                   <li>
                     <b>Unity</b>：熟悉Unity引擎操作、C#語法、常見的Design Pattern(單例、狀態、觀察者…)

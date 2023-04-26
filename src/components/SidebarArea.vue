@@ -11,27 +11,24 @@
 
     <div class="shadow content-item" id="category">
       <h2>文章分類</h2>
-      <p v-for="c in categories" @click.prevent="loadPage(c.name)">
-        <span v-for="n in c.level">----</span>
-        <span v-text="c.name"></span>
-      </p>
+      <router-link class="nav-link active" aria-current="page" :to="'/articles?page=1&category=' + c.name" v-for="c in categories">
+          <span v-for="n in c.level">----</span>
+          <span v-text="c.name"></span>
+      </router-link>
     </div>
   </div>
 </template>
 
 <script>
-import {onMounted, ref} from "vue";
+import {inject, nextTick, onMounted, ref} from "vue";
 import api from "../api/index.js";
+import router from "../router/index.js";
 
 export default {
   name: 'SidebarArea',
   setup() {
     const categories = ref([]);
     const websiteThumbnail = ref("");
-
-    const loadPage = (category) => {
-      location.href = "/articles?page=1&category=" + category;
-    }
 
     onMounted(() => {
       api.getAllCategoriesTree().then(response => {
@@ -45,8 +42,7 @@ export default {
 
     return {
       categories,
-      websiteThumbnail,
-      loadPage
+      websiteThumbnail
     }
   }
 }
@@ -78,14 +74,14 @@ export default {
   border-radius: 50%;
 }
 
-#category p {
+#category .router-link-active {
   margin-bottom: 5px;
   cursor: pointer;
   color: #6f6f6f;
 }
 
-#category p:hover {
-  color: cornflowerblue; /* 当鼠标悬停在 <p> 标签上时，将文本颜色设置为红色 */
+#category .router-link-active:hover {
+  color: cornflowerblue;
 }
 
 </style>

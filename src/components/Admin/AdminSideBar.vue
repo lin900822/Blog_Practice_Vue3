@@ -16,7 +16,10 @@
         </a>
         <ul class="collapse list-unstyled" id="settingsSubmenu">
           <li>
-            <a href="/admin/Basic">設定</a>
+<!--            <a href="/admin/Basic">設定</a>-->
+            <router-link class="nav-link active" aria-current="page" to="/admin/Basic">
+              設定
+            </router-link>
           </li>
         </ul>
 
@@ -27,10 +30,16 @@
         </a>
         <ul class="collapse list-unstyled" id="homeSubmenu">
           <li>
-            <a href="/admin/ArticleEditor">新增文章</a>
+<!--            <a href="/admin/ArticleEditor">新增文章</a>-->
+            <router-link class="nav-link active" aria-current="page" to="/admin/ArticleEditor">
+              新增文章
+            </router-link>
           </li>
           <li>
-            <a href="/admin/ArticleList">文章列表</a>
+<!--            <a href="/admin/ArticleList">文章列表</a>-->
+            <router-link class="nav-link active" aria-current="page" to="/admin/ArticleList">
+              文章列表
+            </router-link>
           </li>
         </ul>
 
@@ -41,7 +50,10 @@
         </a>
         <ul class="collapse list-unstyled" id="categorySubmenu">
           <li>
-            <a href="/admin/Category">分類列表</a>
+<!--            <a href="/admin/Category">分類列表</a>-->
+            <router-link class="nav-link active" aria-current="page" to="/admin/Category">
+              分類列表
+            </router-link>
           </li>
         </ul>
 
@@ -77,7 +89,10 @@
         </a>
         <ul class="collapse list-unstyled" id="resourcesSubmenu">
           <li>
-            <a href="/admin/Resource">資源列表</a>
+<!--            <a href="/admin/Resource">資源列表</a>-->
+            <router-link class="nav-link active" aria-current="page" to="/admin/Resource">
+              資源列表
+            </router-link>
           </li>
         </ul>
 

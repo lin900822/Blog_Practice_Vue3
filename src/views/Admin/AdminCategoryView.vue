@@ -78,7 +78,7 @@
 <script>
 import $ from 'jquery'
 import AdminSideBar from "../../components/Admin/AdminSideBar.vue";
-import {onMounted, ref} from "vue";
+import {inject, onMounted, ref} from "vue";
 import api from "../../api/index.js";
 
 $(document).ready(function () {
@@ -124,22 +124,24 @@ export default {
       document.getElementById("update-category-window").style.display = "none";
     }
 
+    const reload = inject("reload");
+
     const addCategory = () => {
-      api.addCategory(name.value, ancestorId.value).then(response => {
-        location.reload();
+      api.addCategory(name.value, ancestorId.value).then(() => {
+        reload();
       })
     }
 
     const updateCategory = () => {
-      api.updateCategory(name.value, updateId.value).then(repsonse => {
-        location.reload();
+      api.updateCategory(name.value, updateId.value).then(() => {
+        reload();
       })
     }
 
     const deleteCategory = (id, name) => {
       if(confirm("確定要刪除分類: " + name + " 嗎?")){
         api.deleteCategory(id).then(() => {
-          location.reload();
+          reload();
         })
       }
     }

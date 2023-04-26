@@ -3,6 +3,7 @@ import {
 } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import api from "../api/index.js";
+import {inject} from "vue";
 
 const routes = [
     {
@@ -108,5 +109,12 @@ router.beforeEach((to, from, next) => {
         next();
     }
 })
+
+router.afterEach((to, from) => {
+    if (to.path == "/articles") {
+        // reload();
+        // this.$root.reload()
+    }
+});
 
 export default router

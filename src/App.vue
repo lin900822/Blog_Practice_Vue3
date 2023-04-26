@@ -1,11 +1,40 @@
 <template>
   <div>
-    <router-view></router-view>
+    <router-view v-if="isRouterAlive"></router-view>
   </div>
 </template>
 
 <script>
+import {nextTick, provide, ref} from 'vue';
 
+export default {
+  name: 'App',
+  mounted() {
+    this.$router.afterEach((to) => {
+      if (to.name === "articles" || to.name === "AdminArticleListView") {
+        const event = new CustomEvent('onRouted');
+        window.dispatchEvent(event);
+      }
+    });
+
+    const isRouterAlive = ref(true);
+
+    const reload = () => {
+      isRouterAlive.value = false;
+      nextTick(() => {
+        isRouterAlive.value = true;
+      });
+    };
+
+    provide('reload', reload);
+    this.isRouterAlive = isRouterAlive;
+  },
+  data() {
+    return {
+      isRouterAlive: null
+    };
+  }
+};
 </script>
 
 <style>

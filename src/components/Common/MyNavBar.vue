@@ -11,12 +11,15 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item" style="margin: 10px;">
-              <a href="" @click.prevent="loadPage('/')" style="display: block; width: inherit;">首頁</a>
+            <li class="nav-item">
+              <router-link class="nav-link active" aria-current="page" to="/">
+                <span>首頁</span>
+              </router-link>
             </li>
-            <li class="nav-item" style="margin: 10px;" v-for="category in state.categories">
-              <a href="" @click.prevent="loadPage(category.router)" v-text="category.name"
-                 style="display: block; width: inherit;"></a>
+            <li class="nav-item" v-for="category in state.categories">
+              <router-link class="nav-link active" aria-current="page" :to="category.router">
+                <span v-text="category.name"></span>
+              </router-link>
             </li>
           </ul>
 
@@ -42,7 +45,7 @@
 </template>
 
 <script>
-import {ref, reactive, onMounted} from "vue"
+import {ref, reactive, onMounted, inject} from "vue"
 import api from "../../api/index.js";
 
 export default {
@@ -59,10 +62,6 @@ export default {
 
     const isAuthenticated = ref(false);
     const nickname = ref("");
-
-    const loadPage = (url) => {
-      location.href = url;
-    }
 
     onMounted(() => {
       api.getBasic().then(response => {
@@ -95,8 +94,7 @@ export default {
       state,
       isAuthenticated,
       nickname,
-      logout,
-      loadPage
+      logout
     }
   }
 }
@@ -117,7 +115,7 @@ export default {
 }
 
 li {
-  margin: auto 5px;
+  margin: auto 10px;
 }
 
 .log-reg {
@@ -128,7 +126,6 @@ li {
 a {
   text-decoration: none; /* 去除下划线 */
   color: inherit; /* 继承父元素的文本颜色 */
-  margin-right: 15px;
 }
 
 </style>

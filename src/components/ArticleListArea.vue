@@ -8,11 +8,12 @@
 </template>
 
 <script>
-import {onMounted, ref} from "vue"
+import {inject, onMounted, ref} from "vue"
 import ArticlePreview from "./ArticlePreview.vue";
 import api from "../api/index.js";
 import PageSelector from "./Common/PageSelector.vue";
 import formatDate from "../utils/dateFormatter.js";
+import router from "../router/index.js";
 
 
 export default {
@@ -22,37 +23,36 @@ export default {
     const articleList = ref([]);
     const pageInfo = ref({});
 
-    onMounted(() => {
+    const loadArticles = () => {
       articleList.value = [];
       pageInfo.value = {};
 
       const params = new URLSearchParams(location.search);
 
       let pageNum = params.get("page");
-      if(pageNum == null) pageNum = 1;
+      if (pageNum == null) pageNum = 1;
 
-      if(params.has("category")){
+      if (params.has("category")) {
         api.getArticlesByCategories(params.get("category"), pageNum).then(response => {
           articleList.value = response.data.list;
           pageInfo.value = response.data;
 
           for (let i = 0; i < articleList.value.length; i++) {
-            if(articleList.value[i].category.length == 0){
-              articleList.value[i].category="未分類";
+            if (articleList.value[i].category.length == 0) {
+              articleList.value[i].category = "未分類";
             }
 
             articleList.value[i].updatedAt = formatDate(articleList.value[i].updatedAt);
           }
         })
-      }
-      else{
+      } else {
         api.getAllPublicArticles(pageNum).then(response => {
           articleList.value = response.data.list;
           pageInfo.value = response.data;
 
           for (let i = 0; i < articleList.value.length; i++) {
-            if(articleList.value[i].category.length == 0){
-              articleList.value[i].category="未分類";
+            if (articleList.value[i].category.length == 0) {
+              articleList.value[i].category = "未分類";
             }
 
             articleList.value[i].updatedAt = formatDate(articleList.value[i].updatedAt);
@@ -60,6 +60,12 @@ export default {
         })
       }
 
+      window.scrollTo(0, 0);
+    }
+
+    onMounted(() => {
+      loadArticles();
+      window.addEventListener('onRouted', loadArticles);
     });
 
     const changePage = (pageNum) => {
@@ -67,16 +73,18 @@ export default {
 
       const params = new URLSearchParams(location.search);
 
-      if(params.has("category") )
-        location.href = "/articles?page=" + pageNum + "&category=" + params.get("category");
-      else
-        location.href = "/articles?page=" + pageNum;
+      if (params.has("category")) {
+        router.push("/articles?page=" + pageNum + "&category=" + params.get("category"));
+      } else {
+        router.push("/articles?page=" + pageNum);
+      }
     };
 
     return {
       articleList,
       pageInfo,
-      changePage
+      changePage,
+      loadArticles
     }
   }
 }
