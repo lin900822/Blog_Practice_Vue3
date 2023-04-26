@@ -104,6 +104,8 @@ export default {
       api.getUser().then(response => {
         userId.value = response.data.id;
       })
+
+      scrollTo(0, 0);
     });
 
     const comment = ref("");

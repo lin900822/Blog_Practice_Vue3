@@ -5,8 +5,8 @@
       <img :src="websiteThumbnail" alt="">
       <p>歡迎來到Wilson Lin's Blog</p>
       <p>這是一個簡單的個人部落格，用來記錄我的學習歷程</p>
-      <p>前端使用Vue3 + BootStrap + Axios</p>
-      <p>後端使用Spring Boot + MySQL</p>
+      <p>前端: Vue3 + BootStrap + Axios</p>
+      <p>後端: Spring Boot + MySQL + Redis</p>
     </div>
 
     <div class="shadow content-item" id="category">
@@ -81,6 +81,16 @@ export default {
 }
 
 #category .router-link-active:hover {
+  color: cornflowerblue;
+}
+
+#category a {
+  margin-bottom: 5px;
+  cursor: pointer;
+  color: #6f6f6f;
+}
+
+#category a:hover {
   color: cornflowerblue;
 }
 
