@@ -15,7 +15,8 @@
               <a href="" @click.prevent="loadPage('/')" style="display: block; width: inherit;">首頁</a>
             </li>
             <li class="nav-item" style="margin: 10px;" v-for="category in state.categories">
-              <a href="" @click.prevent="loadPage(category.router)" v-text="category.name" style="display: block; width: inherit;"></a>
+              <a href="" @click.prevent="loadPage(category.router)" v-text="category.name"
+                 style="display: block; width: inherit;"></a>
             </li>
           </ul>
 
@@ -71,6 +72,10 @@ export default {
       if (!localStorage.getItem("token")) return;
 
       api.getUser().then(response => {
+        if (response.data == "JWT Expired") {
+          return;
+        }
+
         nickname.value = response.data.nickname;
         isAuthenticated.value = true;
       }).catch(error => {

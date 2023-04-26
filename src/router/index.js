@@ -95,7 +95,11 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
-        api.isAdmin().then(() => {
+        api.isAdmin().then((response) => {
+            if (response.data == "JWT Expired") {
+                next('/404');
+            }
+
             next();
         }).catch(() => {
             next('/404');
