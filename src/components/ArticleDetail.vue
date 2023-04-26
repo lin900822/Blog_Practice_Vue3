@@ -25,7 +25,7 @@
     <div>
       <div class="comment" v-for="c in comments">
         <h2>{{ c.nickname }} ：</h2>
-        <span>發表於{{c.createdAt}}</span>
+        <span>發表於{{ c.createdAt }}</span>
         <div class="operation" v-show="userId == c.userId">
           <button class="btn btn-secondary" @click="editBtnClicked(c.id)"><i class="bi bi-pencil"></i></button>
           <button class="btn btn-danger" @click="deleteBtnClicked(c.id)"><i class="bi bi-trash"></i></button>
@@ -52,6 +52,7 @@ import api from "../api/index.js";
 import {useRoute} from 'vue-router'
 import hljs from "highlight.js/lib/core";
 import formatDate from "../utils/dateFormatter.js";
+import $ from "jquery"
 
 export default {
   name: 'ArticleDetail',
@@ -83,10 +84,19 @@ export default {
       api.getArticleDetail(articleId).then(response => {
         articleVO.title = response.data.title;
         articleVO.thumbnail = response.data.thumbnail;
-        articleVO.content = response.data.content;
+
+        let content = response.data.content;
+
+        content = content.replace(/<iframe/g, '<div class="ql-video-container"><iframe');
+        content = content.replace(/<\/iframe>/g, '</iframe></div>');
+
+        console.log(content)
+
+        articleVO.content = content;
+
         articleVO.category = response.data.category;
-        if(articleVO.category.length == 0){
-          articleVO.category="未分類";
+        if (articleVO.category.length == 0) {
+          articleVO.category = "未分類";
         }
         articleVO.createdAt = formatDate(response.data.createdAt);
       }).catch(() => {
@@ -168,6 +178,7 @@ export default {
     }
   }
 }
+
 </script>
 
 <style scoped>
@@ -209,6 +220,20 @@ h1 {
   max-width: 100%;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
   margin-right: 20px;
+}
+
+.content :deep(.ql-video-container) {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 計算寬高比例 */
+}
+
+.content :deep(.ql-video) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .content :deep(li) {
