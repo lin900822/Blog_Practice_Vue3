@@ -19,7 +19,9 @@
                 <span>國立台北教育大學 | 數位科技設計學系(2019-2023)</span>
               </div>
               <div class="portfolio">
-                <button class="btn btn-secondary">作品集</button>
+                <router-link class="nav-link active" aria-current="page" to="/articles?page=1&category=作品集">
+                  <span class="btn btn-secondary">作品集</span>
+                </router-link>
               </div>
             </div>
           </div>
@@ -40,6 +42,9 @@
                 <h2>技能</h2>
                 <ui>
                   <li>
+                    <b>Unity</b>：熟悉引擎各項基本操作、物理引擎、動畫系統、UGUI、2D/3D製作流程、GC運作、常用API、MonoBehaviour生命週期、C#語法、常見的Design Pattern(單例、狀態、觀察者…)
+                  </li>
+                  <li>
                     <b>前端</b>：了解HTML CSS JS語法，以及 jQuery, Bootstrap, Vue, Axios等框架的基本使用
                   </li>
                   <li>
@@ -47,9 +52,6 @@
                   </li>
                   <li>
                     <b>資料庫</b>：熟悉MySQL資料庫、資料表、增刪改查等語句
-                  </li>
-                  <li>
-                    <b>Unity</b>：熟悉Unity引擎操作、C#語法、常見的Design Pattern(單例、狀態、觀察者…)
                   </li>
                   <li>
                     <b>OpenGL</b>：了解C++基礎語法，並能夠使用OpenGL寫出簡單的3D遊戲

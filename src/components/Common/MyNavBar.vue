@@ -55,7 +55,7 @@ export default {
 
     const state = reactive({
       categories: [
-        {id: 0, name: "作品集", router: "/articles"},
+        {id: 0, name: "作品集", router: "/articles?page=1&category=作品集"},
         {id: 1, name: "文章", router: "/articles"}
       ]
     });

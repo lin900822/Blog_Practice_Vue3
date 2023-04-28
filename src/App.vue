@@ -11,7 +11,7 @@ export default {
   name: 'App',
   mounted() {
     this.$router.afterEach((to) => {
-      if (to.name === "articles" || to.name === "AdminArticleListView") {
+      if (to.name === "articles" || to.name === "AdminArticleListView" || to.name === "ArticleEditorCreate" || to.name === "ArticleEditorUpdate") {
         const event = new CustomEvent('onRouted');
         window.dispatchEvent(event);
       }

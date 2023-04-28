@@ -73,7 +73,7 @@
 
 <script>
 import QuillEditor from "./QuillEditor.vue";
-import {onMounted, reactive, ref, toRaw, toRefs} from "vue";
+import {inject, onMounted, reactive, ref, toRaw, toRefs} from "vue";
 import api from "../../api/index.js";
 import {useRoute} from "vue-router";
 import ResourceSelector from "./ResourceSelector.vue";
@@ -131,7 +131,7 @@ export default {
       });
     };
 
-    onMounted(() => {
+    function loadArticle() {
       if (articleId != null) {
         api.getArticleDetail(articleId).then(response => {
           articleVO.title = response.data.title;
@@ -148,6 +148,26 @@ export default {
           location.href = "/admin/ArticleEditor";
         })
       }
+      else{
+        articleVO.title = "";
+        articleVO.summary = "";
+        articleVO.thumbnail = "";
+        articleVO.content = "";
+        articleVO.category = "";
+        articleVO.status = 1;
+        articleVO.createdAt = "";
+        articleVO.updatedAt = "";
+
+        editor.value.setContent("");
+      }
+    }
+
+    const reload = inject("reload");
+
+    onMounted(() => {
+
+      loadArticle();
+      window.addEventListener('onRouted', reload);
 
       document.addEventListener('keydown', function(event) {
         // 如果同时按下Ctrl和S键
